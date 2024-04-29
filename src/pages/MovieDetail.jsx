@@ -1,14 +1,30 @@
+import { Button } from "components/button";
 import { CastList } from "components/cast";
 import { SimilarList } from "components/similar";
 import { Title } from "components/title";
 import { TrailerList } from "components/trailer";
-import React from "react";
+import { useAuth } from "contexts/auth-context";
+import { useModal } from "contexts/modal-context";
+import {
+	arrayRemove,
+	arrayUnion,
+	doc,
+	onSnapshot,
+	updateDoc,
+} from "firebase/firestore";
+import { auth, db } from "firebaseConfig";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import useSWR from "swr";
 import { fetcher } from "utils/fetchSWR";
 
 const MovieDetail = () => {
 	const { movieId } = useParams();
+	const { currentUser } = useAuth();
+	const { handleOpenSignUp } = useModal();
+	const [loading, setLoading] = useState(false);
+	const [savedMovies, setSavedMovies] = useState([]);
 	const { data, isLoading } = useSWR(
 		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}`,
 		fetcher
@@ -17,6 +33,50 @@ const MovieDetail = () => {
 	data?.production_companies.forEach((item) => {
 		companyNames.push(item.name);
 	});
+
+	useEffect(() => {
+		const getSavedMovies = async () => {
+			if (currentUser) {
+				try {
+					const docRef = doc(db, "users", currentUser?.uid);
+					onSnapshot(docRef, (doc) => {
+						setSavedMovies(doc.data()?.savedMovies === undefined ? [] : doc.data()?.savedMovies);	
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		};
+		getSavedMovies();
+	}, [currentUser]);
+
+	const handleSaveMovie = async (movieId) => {
+		try {
+			setLoading(true);
+			await updateDoc(doc(db, "users", auth.currentUser.uid), {
+				savedMovies: arrayUnion(movieId),
+			});
+			toast.success("Movie is saved!");
+			setLoading(false);
+		} catch (error) {
+			toast.error("Have some errors...");
+		}
+	};
+
+	const handleDeleteMovie = async (movieId) => {
+		try {
+			setLoading(true);
+			await updateDoc(doc(db, "users", auth.currentUser.uid), {
+				savedMovies: arrayRemove(movieId),
+			});
+			toast.success("Movie is deleted!");
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			toast.error("Have some errors...");
+		}
+	};
+
 	if (isLoading)
 		return (
 			<div className="px-6 py-6">
@@ -56,6 +116,7 @@ const MovieDetail = () => {
 				</div>
 			</div>
 		);
+
 	return (
 		<div className="px-6 pb-6">
 			{/* Movie Banner  */}
@@ -78,14 +139,16 @@ const MovieDetail = () => {
 							/>
 						</div>
 						<div className="xl:ml-10 xl:mt-4">
-							<h3 className="text-[36px] font-semibold mb-2">
-								{data?.title} (
-								{`${new Date(
-									data?.release_date
-								).getFullYear()}`}
-								)
-							</h3>
-							<p className="leading-relaxed text-[18px]">
+							<div className="flex justify-between">
+								<h3 className="text-[36px] font-semibold mb-2">
+									{data?.title} (
+									{`${new Date(
+										data?.release_date
+									).getFullYear()}`}
+									)
+								</h3>
+							</div>
+							<p className="leading-relaxed text-[18px] mb-4">
 								<span className="block opacity-75">
 									Language: {data?.original_language}
 								</span>
@@ -118,6 +181,28 @@ const MovieDetail = () => {
 									</span>
 								</span>
 							</p>
+							<Button
+								loading={loading}
+								onClick={() => {
+									if (currentUser) {
+										if (
+											savedMovies.includes(`${movieId}`)
+										) {
+											handleDeleteMovie(movieId);
+										} else {
+											handleSaveMovie(movieId);
+										}
+									} else {
+										handleOpenSignUp();
+									}
+								}}
+								className={"rounded-md h-10"}
+							>
+								{savedMovies.length > 0 &&
+								savedMovies.includes(`${movieId}`)
+									? "Delete Movie"
+									: "Save Movie"}
+							</Button>
 						</div>
 					</div>
 					<div className="px-10 mt-6 leading-relaxed">

@@ -1,17 +1,39 @@
+import SavedItem from "components/SavedItem";
 import { useAuth } from "contexts/auth-context";
 import { signOut } from "firebase/auth";
-import { auth } from "firebaseConfig";
-import React from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "firebaseConfig";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Nav = () => {
 	const navigate = useNavigate();
 	const { currentUser } = useAuth();
+	const [savedMovies, setSavedMovies] = useState([]);
+
 	const handleSignOut = () => {
 		signOut(auth);
 		toast.success("Sign Out Succesfully!");
 	};
+
+	useEffect(() => {
+		if (currentUser) {
+			const getSavedMovies = async () => {
+				try {
+					const docRef = doc(db, "users", currentUser.uid);
+					onSnapshot(docRef, (doc) => {
+						setSavedMovies(doc.data()?.savedMovies === undefined ? [] : doc.data()?.savedMovies);
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			};
+
+			getSavedMovies();
+		}
+	}, [currentUser]);
+
 	return (
 		<div className="flex flex-col justify-between p-5 h-[100vh] bg-bg17">
 			<div>
@@ -51,7 +73,27 @@ const Nav = () => {
 						</NavLink>
 					))}
 				</div>
+				<div>
+					{currentUser && savedMovies.length > 0  && <h5 className="mb-2 ml-4 font-semibold text-pink-500">
+						Saved movie
+					</h5>}
+					{savedMovies && savedMovies.length > 0 &&
+						savedMovies
+							.slice(0, 4)
+							.map((item) => (
+								<SavedItem
+									key={item}
+									movieId={item}
+								></SavedItem>
+							))}
+					{savedMovies && savedMovies.length > 4 && (
+						<span onClick={() => navigate(`/savedMovies`)} className="px-2 py-2 mb-1 text-[12px] ml-4 font-semibold transition-all hover:bg-gray-800 gap-x-4 rounded-xl opacity-60 hover:opacity-100 cursor-pointer">
+							View all...
+						</span>
+					)}
+				</div>
 			</div>
+			{/* logout button appeear when user is logined  */}
 			{currentUser && (
 				<div
 					className="flex items-center px-4 py-4 mb-2 font-semibold transition-all hover:bg-gray-800 gap-x-4 rounded-xl "

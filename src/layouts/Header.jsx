@@ -26,6 +26,9 @@ const Header = () => {
 		} else if (pathname.includes("search")) {
 			return "Search";
 		}else if (pathname === '/now_playing') {
+		} else if (pathname.includes("savedMovies")) {
+			return "Saved Movies";
+		}else if (pathname === '/now_playing') {
 			return "Now Playing";
 		} else return "Unknown Page";
 	};

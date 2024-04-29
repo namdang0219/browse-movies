@@ -1,6 +1,6 @@
 import { MovieItem } from "components/movie";
 import { ListLarge } from "modules/listLarge";
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import { fetcher } from "utils/fetchSWR";
@@ -12,7 +12,6 @@ const SearchMovie = () => {
 		fetcher
 	);
 	const results = data?.results || [];
-	console.log("🚀 ~ SearchMovie ~ data:", data)
 	return (
 		<ListLarge>
 			{results.length > 0 &&
