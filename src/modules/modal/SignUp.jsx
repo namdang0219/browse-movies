@@ -8,53 +8,22 @@ import { toast } from "react-toastify";
 import { Input } from "components/input";
 import { Button } from "components/button";
 import { Link } from "react-router-dom";
-import {
-	addDoc,
-	arrayRemove,
-	arrayUnion,
-	collection,
-	doc,
-	getDoc,
-	setDoc,
-	updateDoc,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
 	const { openSignUp, handleCloseSignUp, handleOpenLogin } = useModal();
-	const { handleSubmit, register, reset } = useForm({ mode: "onChange", defaultValues: {
-		username: '',
-		email: '',
-		password: '',
-		savedMovies: []
-	} });
+	const { handleSubmit, register, reset } = useForm({
+		mode: "onChange",
+		defaultValues: {
+			username: "",
+			email: "",
+			password: "",
+			savedMovies: [],
+		},
+	});
 	const [loading, setLoading] = useState(false);
 
-	const testData = async () => {
-		// const docRef = doc(db, 'users', 'JSfgGEQV9fOQtpa3wEjV')
-		// await updateDoc(docRef, {
-		// 	email: 'Namddang',
-		// 	liked: [1, 2, 4]
-		// })
-		// await updateDoc(docRef, {
-		// 	liked: arrayUnion(100)
-		// })
-		// await updateDoc(docRef, {
-		// 	liked: arrayRemove(1)
-		// })
-		// const docSnap = await getDoc(docRef);
-		// console.log(docSnap.data())
-
-		// const colRef = collection(db, "users");
-		// await addDoc(colRef, {
-		// 	displayName: "Mai Ngoc",
-		// 	age: 12,
-		// });
-		
-		// await setDoc(doc(db, 'users', 'custom-doc'), {
-		// 	displayName: 'Nguyen Ngoc Anh',
-		// 	month: 'six'		
-		// })
-	};
+	const testData = async () => {};
 
 	testData();
 
@@ -69,11 +38,11 @@ const SignUp = () => {
 			await updateProfile(auth.currentUser, {
 				displayName: values.username,
 			});
-			await setDoc(doc(db, 'users', auth.currentUser.uid), {
+			await setDoc(doc(db, "users", auth.currentUser.uid), {
 				displayName: values.username,
 				email: values.email,
 				password: values.password,
-			})
+			});
 			toast.success("Create account successfully!", { delay: 400 });
 			setLoading(false);
 			handleCloseSignUp();
