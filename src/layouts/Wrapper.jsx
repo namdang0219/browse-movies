@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "./Nav";
 import Main from "./Main";
-import { Outlet } from "react-router-dom";
+import { Outlet,  } from "react-router-dom";
 import Header from "./Header";
 import Login from "modules/modal/Login";
 import SignUp from "modules/modal/SignUp";

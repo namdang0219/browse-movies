@@ -23,7 +23,11 @@ const Nav = () => {
 				try {
 					const docRef = doc(db, "users", currentUser.uid);
 					onSnapshot(docRef, (doc) => {
-						setSavedMovies(doc.data()?.savedMovies === undefined ? [] : doc.data()?.savedMovies);
+						setSavedMovies(
+							doc.data()?.savedMovies === undefined
+								? []
+								: doc.data()?.savedMovies
+						);
 					});
 				} catch (error) {
 					console.log(error);
@@ -37,26 +41,8 @@ const Nav = () => {
 	return (
 		<div className="flex flex-col justify-between p-5 h-[100vh] bg-bg17">
 			<div>
-				<h1
-					onClick={() => navigate("/")}
-					className="text-[32px] group cursor-pointer mb-5 font-Calistoga tracking-wider flex items-center gap-x-2 font-semibold text-pink-500"
-				>
-					<span className="text-blue-400 xl:hidden">My</span>
-					<span className="xl:hidden">Movie</span>
-					<span className="transition-all opacity-50 group-hover:opacity-80 xl:mx-auto">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width={40}
-							height={40}
-							viewBox="0 0 24 24"
-						>
-							<path
-								fill="white"
-								d="M18.001 20H20v2h-8C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10a9.985 9.985 0 0 1-3.999 8M12 10a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-4 4a2 2 0 1 0 0-4a2 2 0 0 0 0 4m8 0a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-4 4a2 2 0 1 0 0-4a2 2 0 0 0 0 4"
-							></path>
-						</svg>
-					</span>
-				</h1>
+				<SiteName></SiteName>
+				{/* Nav bar item  */}
 				<div>
 					{navItems.map((item) => (
 						<NavLink
@@ -73,11 +59,16 @@ const Nav = () => {
 						</NavLink>
 					))}
 				</div>
+				{/* Saved movie list  */}
 				<div>
-					{currentUser && savedMovies.length > 0  && <h5 className="mb-2 ml-4 font-semibold text-pink-500">
-						Saved movie
-					</h5>}
-					{savedMovies && savedMovies.length > 0 &&
+					{currentUser && savedMovies.length > 0 && (
+						<h5 className="mb-2 ml-4 font-semibold text-pink-500">
+							Saved movie
+						</h5>
+					)}
+					{currentUser &&
+						savedMovies &&
+						savedMovies.length > 0 &&
 						savedMovies
 							.slice(0, 4)
 							.map((item) => (
@@ -87,7 +78,10 @@ const Nav = () => {
 								></SavedItem>
 							))}
 					{savedMovies && savedMovies.length > 4 && (
-						<span onClick={() => navigate(`/savedMovies`)} className="px-2 py-2 mb-1 text-[12px] ml-4 font-semibold transition-all hover:bg-gray-800 gap-x-4 rounded-xl opacity-60 hover:opacity-100 cursor-pointer">
+						<span
+							onClick={() => navigate(`/savedMovies`)}
+							className="px-2 py-2 mb-1 text-[12px] ml-4 font-semibold transition-all hover:bg-gray-800 gap-x-4 rounded-xl opacity-60 hover:opacity-100 cursor-pointer"
+						>
 							View all...
 						</span>
 					)}
@@ -96,7 +90,7 @@ const Nav = () => {
 			{/* logout button appeear when user is logined  */}
 			{currentUser && (
 				<div
-					className="flex items-center px-4 py-4 mb-2 font-semibold transition-all hover:bg-gray-800 gap-x-4 rounded-xl "
+					className="flex items-center px-4 py-4 mb-2 font-semibold transition-all cursor-pointer hover:bg-gray-800 gap-x-4 rounded-xl "
 					onClick={handleSignOut}
 				>
 					<span>
@@ -118,6 +112,32 @@ const Nav = () => {
 		</div>
 	);
 };
+
+function SiteName() {
+	const navigate = useNavigate();
+	return (
+		<h1
+			onClick={() => navigate("/")}
+			className="text-[32px] group cursor-pointer mb-5 font-Calistoga tracking-wider flex items-center gap-x-2 font-semibold text-pink-500"
+		>
+			<span className="text-blue-400 xl:hidden">My</span>
+			<span className="xl:hidden">Movie</span>
+			<span className="transition-all opacity-50 group-hover:opacity-80 xl:mx-auto">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width={40}
+					height={40}
+					viewBox="0 0 24 24"
+				>
+					<path
+						fill="white"
+						d="M18.001 20H20v2h-8C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10a9.985 9.985 0 0 1-3.999 8M12 10a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-4 4a2 2 0 1 0 0-4a2 2 0 0 0 0 4m8 0a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-4 4a2 2 0 1 0 0-4a2 2 0 0 0 0 4"
+					></path>
+				</svg>
+			</span>
+		</h1>
+	);
+}
 
 const navItems = [
 	{

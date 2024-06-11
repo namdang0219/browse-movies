@@ -1,5 +1,6 @@
 import { Button } from "components/button";
 import { CastList } from "components/cast";
+import { ScrollToTop } from "components/scrollToTop";
 import { SimilarList } from "components/similar";
 import { Title } from "components/title";
 import { TrailerList } from "components/trailer";
@@ -40,7 +41,11 @@ const MovieDetail = () => {
 				try {
 					const docRef = doc(db, "users", currentUser?.uid);
 					onSnapshot(docRef, (doc) => {
-						setSavedMovies(doc.data()?.savedMovies === undefined ? [] : doc.data()?.savedMovies);	
+						setSavedMovies(
+							doc.data()?.savedMovies === undefined
+								? []
+								: doc.data()?.savedMovies
+						);
 					});
 				} catch (error) {
 					console.log(error);
@@ -119,6 +124,7 @@ const MovieDetail = () => {
 
 	return (
 		<div className="px-6 pb-6">
+			<ScrollToTop></ScrollToTop>
 			{/* Movie Banner  */}
 			<div className="h-[450px] rounded-xl object-center overflow-hidden mb-14">
 				<img

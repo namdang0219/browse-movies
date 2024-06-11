@@ -11,16 +11,18 @@ const Popular = () => {
 	);
 	const results = data?.results || [];
 	return (
-		<ListLarge>
-			{results.length > 0 &&
-				results.map((item) => (
-					<MovieItem
-						key={item.id}
-						data={item}
-						loading={isLoading}
-					></MovieItem>
-				))}
-		</ListLarge>
+		<>
+			<ListLarge>
+				{results.length > 0 &&
+					results.map((item) => (
+						<MovieItem
+							key={item.id}
+							data={item}
+							loading={isLoading}
+						></MovieItem>
+					))}
+			</ListLarge>
+		</>
 	);
 };
 
