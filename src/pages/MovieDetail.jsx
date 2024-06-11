@@ -1,6 +1,5 @@
 import { Button } from "components/button";
 import { CastList } from "components/cast";
-import { ScrollToTop } from "components/scrollToTop";
 import { SimilarList } from "components/similar";
 import { Title } from "components/title";
 import { TrailerList } from "components/trailer";
@@ -26,6 +25,9 @@ const MovieDetail = () => {
 	const { handleOpenSignUp } = useModal();
 	const [loading, setLoading] = useState(false);
 	const [savedMovies, setSavedMovies] = useState([]);
+	
+	
+
 	const { data, isLoading } = useSWR(
 		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}`,
 		fetcher
@@ -124,7 +126,6 @@ const MovieDetail = () => {
 
 	return (
 		<div className="px-6 pb-6">
-			<ScrollToTop></ScrollToTop>
 			{/* Movie Banner  */}
 			<div className="h-[450px] rounded-xl object-center overflow-hidden mb-14">
 				<img
