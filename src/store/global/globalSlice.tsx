@@ -12,10 +12,10 @@ const globalSlice = createSlice({
 	name: "global",
 	initialState: globalInitialState,
 	reducers: {
-    toggleDarkMode: (state) => {
-      state.darkMode =!state.darkMode;
-    },
-  },
+		toggleDarkMode: (state) => {
+			state.darkMode = !state.darkMode;
+		},
+	},
 });
 
 export const { toggleDarkMode } = globalSlice.actions;
