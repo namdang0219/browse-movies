@@ -1,18 +1,36 @@
 import { LogoutIcon, SunIcon } from "components/icon/nav";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MoonIcon from "../../components/icon/nav/MoonIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { toggleDarkMode } from "store/global/globalSlice";
 
 const Logout = () => {
-	const [showSetting, setShowSetting] = useState<boolean>(true);
+	const [showSetting, setShowSetting] = useState<boolean>(false);
 	const { darkMode } = useSelector((state: RootState) => state.global);
 	const dispatch = useDispatch();
+	const settingBoxRef = useRef<HTMLDivElement>(null);
 
 	const handleDarkMode = () => {
 		dispatch(toggleDarkMode());
 	};
+
+	useEffect(() => {
+		if (showSetting) {
+			const handleClickOutside = (e: MouseEvent) => {
+				if (
+					settingBoxRef.current &&
+					!settingBoxRef.current.contains(e.target as Node)
+				) {
+					setShowSetting(false);
+				}
+			};
+			document.addEventListener("mousedown", handleClickOutside);
+			return () => {
+				document.removeEventListener("mousedown", handleClickOutside);
+			};
+		}
+	}, [showSetting]);
 
 	return (
 		<div className="relative flex items-center justify-between p-4">
@@ -40,6 +58,7 @@ const Logout = () => {
 			</button>
 			{showSetting && (
 				<div
+					ref={settingBoxRef}
 					className={`absolute w-[180px] p-1 z-10 border border-borderColor dark:border-borderColorDark dark:bg-slate-900 bottom-16 right-6 rounded-md`}
 				>
 					<div

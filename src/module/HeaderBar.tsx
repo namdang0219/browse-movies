@@ -14,7 +14,7 @@ const HeaderBar = () => {
 					</button>
 				</div>
 				<div className="h-full">
-					<button className="h-full px-5 transition-all rounded-full hover:bg-primary-hover bg-primary">
+					<button className="h-full px-5 text-white transition-all rounded-full hover:bg-primary-hover bg-primary">
 						Login
 					</button>
 				</div>

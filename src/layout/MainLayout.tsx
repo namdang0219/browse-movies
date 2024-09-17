@@ -21,7 +21,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 			<Sidebar />
 			<div className="flex-1">
 				<HeaderBar />
-				<div className="flex flex-1">{children}</div>
+				{children}
 			</div>
 		</div>
 	);
