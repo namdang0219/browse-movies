@@ -1,5 +1,4 @@
 import { BannerItem } from "components/banner";
-import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { Autoplay } from "swiper/modules";
@@ -13,6 +12,7 @@ const BannerSection = () => {
 			<Swiper
 				spaceBetween={50}
 				slidesPerView={1}
+				speed={1500}
 				modules={[Autoplay]}
 				autoplay={{ delay: 2500 }}
 			>

@@ -17,11 +17,13 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 	}, [darkMode]);
 
 	return (
-		<div className="grid h-screen grid-cols-[240px_calc(100vw-240px)]">
+		<div className="grid grid-cols-[240px_calc(100vw-240px)] w-full h-full max-w-[100vw] overflow-hidden">
 			<Sidebar />
-			<div className="flex-1">
+			<div>
 				<HeaderBar />
-				{children}
+				<div className="overflow-y-scroll h-full max-h-[calc(100vh-60px)] custom-scroll">
+					{children}
+				</div>
 			</div>
 		</div>
 	);
