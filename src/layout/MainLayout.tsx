@@ -17,7 +17,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 	}, [darkMode]);
 
 	return (
-		<div className="flex w-full h-[100vh]">
+		<div className="grid h-screen grid-cols-[240px_calc(100vw-240px)]">
 			<Sidebar />
 			<div className="flex-1">
 				<HeaderBar />
