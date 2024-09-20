@@ -5,9 +5,18 @@ import PageNotFound from "page/PageNotFound";
 import PopularPage from "page/PopularPage";
 import TopRatedPage from "page/TopRatedPage";
 import UpcomingPage from "page/UpcomingPage";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { getUsers } from "store/user/userSlice";
 
 const App = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getUsers());
+	}, [dispatch]);
+
 	return (
 		<Routes>
 			<Route path="/" element={<HomePage />} />
