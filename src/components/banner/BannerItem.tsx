@@ -1,3 +1,5 @@
+import { apiLinks } from "util/constant/api-link";
+
 interface IBannerItem {
 	backdrop_path: string;
 	title: string;
@@ -9,11 +11,10 @@ const BannerItem = ({
 }: {
 	item: IBannerItem;
 }) => {
-  const imageLink: string = 'https://image.tmdb.org/t/p/original'
 	return (
 		<div className="relative w-full h-[520px] rounded-lg overflow-hidden">
 			<img
-				src={`${imageLink}/${backdrop_path}`}
+				src={`${apiLinks.originalImage}/${backdrop_path}`}
 				alt="banner"
 				className="object-cover object-center w-full h-full"
 			/>
