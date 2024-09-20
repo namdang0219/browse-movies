@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { RootState } from "store/store";
 import { SwiperSlide, Swiper } from "swiper/react";
 
-const PopolarSection = () => {
+const PopularSection = () => {
 	const { popularMovies } = useSelector((state: RootState) => state.movie);
-	console.log("🚀 ~ PopolarSection ~ popularMovies:", popularMovies);
 
 	return (
 		<div className="px-4 mb-4">
@@ -48,4 +47,4 @@ const PopolarSection = () => {
 	);
 };
 
-export default PopolarSection;
+export default PopularSection;

@@ -1,5 +1,6 @@
 import { MovieItem } from "components/movie";
 import MainLayout from "layout/MainLayout";
+import MovieGrid from "layout/MovieGrid";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
@@ -8,12 +9,12 @@ const PopularPage = () => {
 
 	return (
 		<MainLayout>
-			<div className="grid grid-cols-5 p-4 gap-[30px]">
+			<MovieGrid>
 				{popularMovies &&
 					popularMovies.map((m: any) => (
-							<MovieItem key={m.id} item={m}></MovieItem>
+						<MovieItem key={m.id} item={m}></MovieItem>
 					))}
-			</div>
+			</MovieGrid>
 		</MainLayout>
 	);
 };

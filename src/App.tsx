@@ -1,3 +1,4 @@
+import axios from "axios";
 import HomePage from "page/HomePage";
 import MovieDetailPage from "page/MovieDetailPage";
 import NowPlayingPage from "page/NowPlayingPage";
@@ -8,13 +9,15 @@ import UpcomingPage from "page/UpcomingPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { getMovies } from "store/movie/movieSlice";
 import { getUsers } from "store/user/userSlice";
 
 const App = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getUsers());
+		// dispatch(getUsers());
+		dispatch(getMovies());
 	}, [dispatch]);
 
 	return (

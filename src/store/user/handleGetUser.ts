@@ -23,7 +23,6 @@ interface User {
 
 export function* handleGetUser() {
 	try {
-		console.log("Fetching user");
 		const response: { data: User[] } = yield call(requestUser);
 		const users = response.data;
 		yield put(setUser(users));
