@@ -1,16 +1,20 @@
+import useMovieGenres from "hook/useMovieGenres";
 import { apiLinks } from "util/constant/api-link";
 
 interface IBannerItem {
 	backdrop_path: string;
 	title: string;
 	overview: string;
+	genre_ids: (number | string)[];
 }
 
 const BannerItem = ({
-	item: { backdrop_path, title, overview },
+	item: { backdrop_path = "", title = "", overview = "", genre_ids = [] },
 }: {
 	item: IBannerItem;
 }) => {
+	const movieGenres = useMovieGenres(genre_ids);
+
 	return (
 		<div className="relative w-full h-[520px] rounded-lg overflow-hidden">
 			<img
@@ -27,8 +31,10 @@ const BannerItem = ({
 					<p className="w-full max-w-[75%] line-clamp-3 mt-2">
 						{overview}
 					</p>
+
+					{/* genres  */}
 					<div className="flex items-center gap-2 mt-3">
-						{["Movie", "Active", "Racing"].map((item) => (
+						{movieGenres.map((item) => (
 							<span
 								key={item}
 								className="px-2 py-1 text-sm text-white border border-white rounded pointer-events-none select-none opacity-70"

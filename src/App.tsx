@@ -8,6 +8,7 @@ import UpcomingPage from "page/UpcomingPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { getGenres } from "store/genre/genreSlice";
 import { getMovies } from "store/movie/movieSlice";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
 
 	useEffect(() => {
 		dispatch(getMovies());
+		dispatch(getGenres());
 	}, [dispatch]);
 
 	return (
