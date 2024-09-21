@@ -1,10 +1,10 @@
-import { ReactNode, useEffect } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import HeaderBar from "module/HeaderBar";
 import Sidebar from "module/Sidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
-const MainLayout = ({ children }: { children: ReactNode }) => {
+const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const { darkMode } = useSelector((state: RootState) => state.global);
 
 	useEffect(() => {

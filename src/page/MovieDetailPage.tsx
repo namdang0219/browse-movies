@@ -14,9 +14,11 @@ const MovieDetailPage = () => {
 
 	if (isLoading)
 		return (
-			<div className="flex items-center justify-center h-16">
-				Loading...
-			</div>
+			<MainLayout>
+				<div className="flex items-center justify-center h-16">
+					Loading...
+				</div>
+			</MainLayout>
 		);
 
 	const {

@@ -5,8 +5,8 @@ import { Autoplay } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
 
 const BannerSection = () => {
-	const { popularMovies } = useSelector((state: RootState) => state.movie);
-  
+	const { upcomingMovies } = useSelector((state: RootState) => state.movie);
+
 	return (
 		<div className="p-4">
 			<Swiper
@@ -16,8 +16,8 @@ const BannerSection = () => {
 				modules={[Autoplay]}
 				autoplay={{ delay: 2500 }}
 			>
-				{popularMovies &&
-					popularMovies.slice(0, 5).map((m: any) => (
+				{upcomingMovies &&
+					upcomingMovies.slice(0, 5).map((m: any) => (
 						<SwiperSlide key={m.id}>
 							<BannerItem item={m} />
 						</SwiperSlide>
