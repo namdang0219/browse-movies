@@ -1,4 +1,5 @@
 import useMovieGenres from "hook/useMovieGenres";
+import { useNavigate } from "react-router-dom";
 import { apiLinks } from "util/constant/api-link";
 
 interface IBannerItem {
@@ -6,17 +7,22 @@ interface IBannerItem {
 	title: string;
 	overview: string;
 	genre_ids: (number | string)[];
+	id: string;
 }
 
 const BannerItem = ({
-	item: { backdrop_path = "", title = "", overview = "", genre_ids = [] },
+	item: { id, backdrop_path = "", title = "", overview = "", genre_ids = [] },
 }: {
 	item: IBannerItem;
 }) => {
+	const navigate = useNavigate();
 	const movieGenres = useMovieGenres(genre_ids);
 
 	return (
-		<div className="relative w-full h-[520px] rounded-lg overflow-hidden">
+		<div
+			className="relative w-full h-[520px] rounded-lg overflow-hidden"
+			onClick={() => navigate(`/detail/${id}`)}
+		>
 			<img
 				src={`${apiLinks.originalImage}/${backdrop_path}`}
 				alt="banner"
