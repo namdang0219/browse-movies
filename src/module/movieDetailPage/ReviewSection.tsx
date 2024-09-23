@@ -1,4 +1,3 @@
-import React from "react";
 import SectionTitle from "../../components/title/SectionTitle";
 import useSWR from "swr";
 import { fetcher } from "util/func/fetcher";
@@ -14,7 +13,7 @@ const ReviewSection = ({
 		fetcher
 	);
 	const reviews = data?.results || [];
-	console.log("🚀 ~ data:", data);
+
 	return (
 		<div>
 			<SectionTitle>Top Reviews</SectionTitle>
@@ -38,16 +37,19 @@ const ReviewSection = ({
 								</div>
 								<div>
 									<div className="flex items-center gap-2 mb-1">
-										<p className="text-lg text-slate-200 text-medium">
+										<p className="text-lg dark:text-slate-200 text-slate-800 text-medium">
 											{review?.author}
 										</p>
 										<span className="text-sm text-slate-500">
 											{review?.updated_at.split("T")[0]}
 										</span>
 									</div>
-									<p className="text-sm text-slate-400">
-										{review?.content}
-									</p>
+									<p
+										className="text-sm text-slate-400"
+										dangerouslySetInnerHTML={{
+											__html: review?.content,
+										}}
+									></p>
 								</div>
 							</div>
 						</div>
@@ -58,46 +60,3 @@ const ReviewSection = ({
 };
 
 export default ReviewSection;
-
-/**
- * 0
-: 
-author
-: 
-"Hotplix"
-author_details
-: 
-avatar_path
-: 
-"/5LdGr01PGRmrg6Hh3LYPGlOOdUx.jpg"
-name
-: 
-"Hotplix"
-rating
-: 
-8
-username
-: 
-"Hotplix"
-[[Prototype]]
-: 
-Object
-content
-: 
-"\"Despicable Me 4\" is a delightful addition to the beloved animated franchise, bringing back the charm and humor that fans adore. Directed by Kyle Balda, the film sees the return of Gru, voiced by Steve Carell, and his mischievous Minions on another entertaining adventure. The movie balances heartwarming moments with laugh-out-loud comedy, introducing fresh characters and creative plot twists. The animation is vibrant and engaging, while the voice cast delivers standout performances. \"Despicable Me 4\" continues to capture the magic of the series, making it a fun and enjoyable watch for audiences of all ages."
-created_at
-: 
-"2024-06-06T10:44:55.424Z"
-id
-: 
-"666193270936853b78cbb431"
-updated_at
-: 
-"2024-06-06T21:27:03.171Z"
-url
-: 
-"https://www.themoviedb.org/review/666193270936853b78cbb431"
-[[Prototype]]
-: 
-Object
- */

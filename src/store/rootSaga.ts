@@ -8,6 +8,6 @@ export default function* rootSaga() {
 		// my saga here
 		fork(userSaga),
 		fork(moviesSaga),
-		fork(genreSaga),
+		fork(genreSaga)
 	]);
 }

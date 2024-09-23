@@ -16,7 +16,7 @@ const Nav = () => {
 					<NavLink
 						to={n.to}
 						className={({ isActive }) =>
-							`flex items-center gap-4 px-3 py-2.5 rounded-md transition-all ${
+							`flex items-center gap-4 px-3 py-2.5 rounded-md transition-all select-none ${
 								isActive
 									? "bg-primary text-white pointer-events-none"
 									: " dark:hover:bg-slate-700 hover:bg-slate-100"

@@ -17,7 +17,7 @@ const VideoSection = ({
 	return (
 		<div>
 			<SectionTitle>Videos</SectionTitle>
-			<div className="grid grid-cols-2 grid-rows-2 gap-4">
+			<div className="grid grid-cols-2 gap-4">
 				{videos.length > 0 &&
 					videos.slice(0, 4).map((video: any) => (
 						<div key={video?.id} className="w-full aspect-video">

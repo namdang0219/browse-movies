@@ -9,6 +9,7 @@ import VideoSection from "module/movieDetailPage/VideoSection";
 import { StarIcon } from "components/icon/movieDetail";
 import { IGenre } from "store/genre/handleGetGenre";
 import ReviewSection from "module/movieDetailPage/ReviewSection";
+import SimilarSection from "module/movieDetailPage/SimilarSection";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
@@ -31,9 +32,9 @@ const MovieDetailPage = () => {
 
 	return (
 		<MainLayout>
-			<div className="px-4 pt-4 grid grid-cols-[1fr_400px]">
+			<div className=" grid grid-cols-[1fr_400px] relative">
 				{/* movie detail container  */}
-				<div className="mb-20">
+				<div className="px-4 pt-4 mb-20">
 					{/* banner  */}
 					<div className="w-full aspect-[16/6] rounded-lg overflow-hidden">
 						<img
@@ -101,7 +102,9 @@ const MovieDetailPage = () => {
 				</div>
 
 				{/* similar movies container  */}
-				<div></div>
+				<div className="p-4">
+					<SimilarSection movieId={movieId} />
+				</div>
 			</div>
 		</MainLayout>
 	);

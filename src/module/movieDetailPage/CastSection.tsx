@@ -1,4 +1,3 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { apiLinks } from "util/constant/api-link";
@@ -15,7 +14,7 @@ const CastSection = ({ movieId }: { movieId: number | string | undefined }) => {
 	return (
 		<div className="">
       <SectionTitle>Casts</SectionTitle>
-      <div className="w-[calc(100vw-400px-240px-20px-160px)]">
+      <div className="w-[calc(100vw-400px-240px-40px-160px)]">
         <Swiper slidesPerView={5} spaceBetween={20}>
           {casts.length > 0 &&
             casts.slice(0, 10).map((cast: any) => (
