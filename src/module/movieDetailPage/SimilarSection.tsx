@@ -1,5 +1,4 @@
-import MovieSimilarItem from "components/movie/MovieSimilarItem";
-import { useNavigate } from "react-router-dom";
+import MovieSimilarItem, { ISimilar } from "components/movie/MovieSimilarItem";
 import useSWR from "swr";
 import { fetcher } from "util/func/fetcher";
 
@@ -13,7 +12,6 @@ const SimilarSection = ({
 		fetcher
 	);
 	const similarMovies = data?.results || [];
-	console.log(similarMovies)
 
 	return (
 		<div className="border rounded-xl border-borderColor overflow-hidden dark:border-borderColorDark h-[calc(100vh-60px-32px)] top-4 sticky flex flex-col">
@@ -22,7 +20,7 @@ const SimilarSection = ({
 			</div>
 			<div className="flex-1 overflow-y-scroll custom-scroll">
 				{similarMovies.length > 0 &&
-					similarMovies.map((similar: any) => (
+					similarMovies.map((similar: ISimilar) => (
 						<MovieSimilarItem
 							key={similar?.id}
 							item={similar}

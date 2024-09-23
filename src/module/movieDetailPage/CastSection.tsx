@@ -22,7 +22,7 @@ const CastSection = ({ movieId }: { movieId: number | string | undefined }) => {
                 <div className="select-none">
                   <div className="w-full overflow-hidden rounded aspect-[3/4]">
                     <img
-                      src={`${apiLinks.originalImage}/${cast.profile_path}`}
+                      src={`${apiLinks.w500Image}/${cast.profile_path}`}
                       alt="cast-image"
                       className="object-cover object-center w-full h-full"
                     />

@@ -25,7 +25,7 @@ const ReviewSection = ({
 								<div className="flex items-center justify-center flex-shrink-0 w-8 h-8 overflow-hidden rounded-full bg-slate-700">
 									{review?.author_details?.avatar_path ? (
 										<img
-											src={`${apiLinks.originalImage}/${review?.author_details?.avatar_path}`}
+											src={`${apiLinks.w500Image}/${review?.author_details?.avatar_path}`}
 											alt="user-avatar"
 											className="object-cover object-center w-full h-full"
 										/>

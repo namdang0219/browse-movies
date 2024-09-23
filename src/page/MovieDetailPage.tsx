@@ -51,7 +51,7 @@ const MovieDetailPage = () => {
 							{/* poster  */}
 							<div className="w-[160px] aspect-[3/4] bg-slate-800 flex items-center justify-center">
 								<img
-									src={`${apiLinks.originalImage}/${movieDetail?.poster_path}`}
+									src={`${apiLinks.w500Image}/${movieDetail?.poster_path}`}
 									alt="poster-image"
 									className="object-contain object-center w-full h-full"
 								/>
