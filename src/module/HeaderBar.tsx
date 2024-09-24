@@ -1,4 +1,13 @@
+import useModal from "hook/useModal";
+import SignupModal from "./modal/SignupModal";
+
 const HeaderBar = () => {
+	const { showModalWithContent } = useModal();
+
+	const handleLoginModal = () => {
+		showModalWithContent(<SignupModal />);
+	};
+
 	return (
 		<div className="h-[60px] border-b border-b-borderColor dark:border-b-borderColorDark flex items-center">
 			<div className="flex items-center justify-between flex-1 h-[40px] gap-6 px-4">
@@ -14,7 +23,10 @@ const HeaderBar = () => {
 					</button>
 				</div>
 				<div className="h-full">
-					<button className="h-full px-5 text-white transition-all rounded-full hover:bg-primary-hover bg-primary">
+					<button
+						onClick={handleLoginModal}
+						className="h-full px-5 text-white transition-all rounded-full hover:bg-primary-hover bg-primary"
+					>
 						Login
 					</button>
 				</div>
