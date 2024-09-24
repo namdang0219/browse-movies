@@ -28,7 +28,7 @@ const HeaderBar = () => {
 						onClick={handleLoginModal}
 						className="h-full px-5 text-white transition-all rounded-full hover:bg-primary-hover bg-primary"
 					>
-						Login
+						Sign Up
 					</button>
 				</div>
 			</div>
