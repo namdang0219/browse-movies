@@ -1,17 +1,11 @@
 import { Input } from "components/input";
 import { FormTitle } from "components/title";
-import { useModal } from "context/modal-context";
 import React from "react";
 import { useForm } from "react-hook-form";
-import LoginModal from "./LoginModal";
+import SignupModal, { IUserValue } from "./SignupModal";
+import { useModal } from "context/modal-context";
 
-export interface IUserValue {
-	nickname: string;
-	email: string;
-	password: string;
-}
-
-const SignupModal = () => {
+const LoginModal = () => {
 	const {
 		handleSubmit,
 		register,
@@ -26,11 +20,11 @@ const SignupModal = () => {
 	});
 	const { setModalContent } = useModal();
 
-	const handleLoginModal = () => {
-		setModalContent(<LoginModal />);
+	const handleSignupModal = () => {
+		setModalContent(<SignupModal />);
 	};
 
-	const handleSignup = (values: IUserValue) => {
+	const handleLogin = (values: IUserValue) => {
 		if (!isValid) {
 			return;
 		}
@@ -39,15 +33,10 @@ const SignupModal = () => {
 
 	return (
 		<div className="text-center  w-full max-w-[400px]">
-			<FormTitle>Sign Up</FormTitle>
-			<p className="mt-4 text-slate-400">Welcome to MyMovie 🎉</p>
+			<FormTitle>Login</FormTitle>
+			<p className="mt-4 text-slate-400">Glad to see you back 🎉</p>
 			{/* form inputs */}
-			<form onSubmit={handleSubmit(handleSignup)} className="mt-6">
-				<Input
-					valueName="nickname"
-					placeholder="Nickname"
-					register={register}
-				/>
+			<form onSubmit={handleSubmit(handleLogin)} className="mt-6">
 				<Input
 					valueName="email"
 					type="email"
@@ -64,15 +53,15 @@ const SignupModal = () => {
 					type="submit"
 					className="w-full p-3 mt-2 text-white rounded-md bg-primary hover:bg-primary-hover"
 				>
-					Sign Up
+					Login
 				</button>
 				<p className="mt-4 text-slate-400">
-					Already have an account?{" "}
+					Haven't an account?{" "}
 					<span
 						className="cursor-pointer text-slate-600 hover:text"
-						onClick={handleLoginModal}
+						onClick={handleSignupModal}
 					>
-						Login
+						Sign up
 					</span>
 				</p>
 			</form>
@@ -80,4 +69,4 @@ const SignupModal = () => {
 	);
 };
 
-export default SignupModal;
+export default LoginModal;

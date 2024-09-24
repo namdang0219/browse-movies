@@ -2,12 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface IGlobalInitialState {
 	darkMode: boolean;
-	showModal: boolean;
 }
 
 const globalInitialState: IGlobalInitialState = {
 	darkMode: true,
-	showModal: false,
 };
 
 const globalSlice = createSlice({
@@ -17,13 +15,9 @@ const globalSlice = createSlice({
 		toggleDarkMode: (state) => {
 			state.darkMode = !state.darkMode;
 		},
-		setShowModal: (state, action) => ({
-			...state,
-			showModal: action.payload,
-		}),
 	},
 });
 
-export const { toggleDarkMode, setShowModal } = globalSlice.actions;
+export const { toggleDarkMode } = globalSlice.actions;
 
 export default globalSlice.reducer;

@@ -1,18 +1,16 @@
+import { useModal } from "context/modal-context";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { setShowModal } from "store/global/globalSlice";
-import { RootState } from "store/store";
 
 const Modal = () => {
-	const { showModal } = useSelector((state: RootState) => state.global);
-	const dispatch = useDispatch();
+	const { modalShow, modalContent, setModalShow } = useModal();
 
 	const handleHideModal = () => {
-		dispatch(setShowModal(false));
+		setModalShow(false);
 	};
 
-	if (!showModal) return <></>;
+	if (!modalShow) {
+		return <></>;
+	}
 
 	return createPortal(
 		<div className="absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-40">
@@ -39,6 +37,7 @@ const Modal = () => {
 				</span>
 
 				{/* modal content */}
+				{modalContent}
 			</div>
 		</div>,
 		document.body

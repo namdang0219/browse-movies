@@ -1,11 +1,12 @@
-import useModal from "hook/useModal";
+import { useModal } from "context/modal-context";
 import SignupModal from "./modal/SignupModal";
 
 const HeaderBar = () => {
-	const { showModalWithContent } = useModal();
+	const { setModalShow, setModalContent } = useModal();
 
 	const handleLoginModal = () => {
-		showModalWithContent(<SignupModal />);
+		setModalContent(<SignupModal />);
+		setModalShow(true);
 	};
 
 	return (
