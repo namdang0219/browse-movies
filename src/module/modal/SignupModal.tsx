@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import LoginModal from "./LoginModal";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import { createUser } from "store/user/userSlice";
+import { AppDispatch } from "store/store";
 
 export interface IUserValue {
 	nickname: string;
@@ -42,6 +45,7 @@ const SignupModal = () => {
 		mode: "onChange",
 	});
 	const { setModalContent } = useModal();
+	const dispatch = useDispatch<AppDispatch>();
 
 	const handleLoginModal = () => {
 		setModalContent(<LoginModal />);
@@ -51,7 +55,9 @@ const SignupModal = () => {
 		if (!isValid) {
 			return;
 		}
-		console.log(values);
+		dispatch(
+			createUser({ email: values.email, password: values.password })
+		);
 	};
 
 	return (
@@ -89,7 +95,7 @@ const SignupModal = () => {
 				>
 					Sign Up
 				</button>
-				<p className="mt-4 text-slate-400 select-none">
+				<p className="mt-4 select-none text-slate-400">
 					Already have an account?{" "}
 					<span
 						className="cursor-pointer text-slate-600 hover:text"
