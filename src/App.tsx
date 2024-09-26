@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { getGenres } from "store/genre/genreSlice";
 import { getMovies } from "store/movie/movieSlice";
+import { getUser } from "store/user/userSlice";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const App = () => {
 	useEffect(() => {
 		dispatch(getMovies());
 		dispatch(getGenres());
+		dispatch(getUser());
 	}, [dispatch]);
 
 	return (

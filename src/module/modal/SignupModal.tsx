@@ -1,14 +1,15 @@
 import { Input } from "components/input";
 import { FormTitle } from "components/title";
 import { useModal } from "context/modal-context";
-import React from "react";
 import { useForm } from "react-hook-form";
 import LoginModal from "./LoginModal";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { createUser } from "store/user/userSlice";
-import { AppDispatch } from "store/store";
+import { AppDispatch, RootState } from "store/store";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export interface IUserValue {
 	nickname: string;
@@ -44,20 +45,27 @@ const SignupModal = () => {
 		resolver: yupResolver(SignupSchema),
 		mode: "onChange",
 	});
-	const { setModalContent } = useModal();
+	const { setModalContent, setModalShow } = useModal();
 	const dispatch = useDispatch<AppDispatch>();
+	const { loading } = useSelector((state: RootState) => state.user);
 
 	const handleLoginModal = () => {
 		setModalContent(<LoginModal />);
 	};
 
-	const handleSignup = (values: IUserValue) => {
+	const handleSignup = async (values: IUserValue) => {
 		if (!isValid) {
 			return;
 		}
-		dispatch(
-			createUser({ email: values.email, password: values.password })
+		await dispatch(
+			createUser({
+				email: values.email,
+				password: values.password,
+				displayName: values.nickname,
+			})
 		);
+		setModalShow(false);
+		toast.success("Create user successfully!");
 	};
 
 	return (
@@ -91,9 +99,13 @@ const SignupModal = () => {
 				/>
 				<button
 					type="submit"
-					className="w-full p-3 mt-2 text-white rounded-md select-none bg-primary hover:bg-primary-hover"
+					className="flex items-center justify-center w-full h-12 mt-2 text-white rounded-md select-none bg-primary hover:bg-primary-hover"
 				>
-					Sign Up
+					{loading ? (
+						<div className="loader" />
+					) : (
+						<span>Sign Up</span>
+					)}
 				</button>
 				<p className="mt-4 select-none text-slate-400">
 					Already have an account?{" "}
