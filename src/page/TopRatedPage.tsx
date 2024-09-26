@@ -1,11 +1,16 @@
 import { MovieItem } from "components/movie";
 import MainLayout from "layout/MainLayout";
 import MovieGrid from "layout/MovieGrid";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
 const TopRatedPage = () => {
 	const { topRatedMovies } = useSelector((state: RootState) => state.movie);
+
+	useEffect(() => {
+		document.title = 'Top Rated';
+	}, []);
 
 	return (
 		<MainLayout>

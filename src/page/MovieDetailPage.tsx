@@ -10,6 +10,7 @@ import { StarIcon } from "components/icon/movieDetail";
 import { IGenre } from "store/genre/handleGetGenre";
 import ReviewSection from "module/movieDetailPage/ReviewSection";
 import SimilarSection from "module/movieDetailPage/SimilarSection";
+import { useEffect } from "react";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
@@ -17,6 +18,12 @@ const MovieDetailPage = () => {
 		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_DB_KEY}`,
 		fetcher
 	);
+
+	const title = movieDetail?.title || "Loading...";
+
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
 
 	const genres: string[] =
 		movieDetail?.genres.map((g: IGenre) => g.name) || [];

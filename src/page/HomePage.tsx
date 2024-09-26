@@ -4,11 +4,16 @@ import HomeSliderSection from "../components/slider/HomeSliderSection";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { Modal } from "components/modal";
+import { useEffect } from "react";
 
 const HomePage = () => {
 	const { popularMovies, nowplayingMovies, topRatedMovies } = useSelector(
 		(state: RootState) => state.movie
 	);
+
+	useEffect(() => {
+    document.title = "Mymovie | Home";
+  }, []);
 
 	return (
 		<MainLayout>

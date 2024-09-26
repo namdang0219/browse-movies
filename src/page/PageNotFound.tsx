@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		document.title = 'Page Not Found';
+	}, []);
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen">
