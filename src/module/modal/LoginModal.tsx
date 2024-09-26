@@ -1,17 +1,23 @@
 import { Input } from "components/input";
 import { FormTitle } from "components/title";
-import React from "react";
 import { useForm } from "react-hook-form";
-import SignupModal, { IUserValue } from "./SignupModal";
+import SignupModal from "./SignupModal";
 import { useModal } from "context/modal-context";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "components/button";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "store/store";
+import { loginUser } from "store/user/userSlice";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+interface IUserLogin {
+	email: string;
+	password: string;
+}
 
 const LoginSchema = Yup.object({
-	nickname: Yup.string()
-		.required("Nickname is required")
-		.min(3, "Your nickname is at least 3 characters long")
-		.max(10, "Your password is at least 10 characters long"),
 	email: Yup.string()
 		.email("Invalid email format")
 		.required("Email is required"),
@@ -26,26 +32,35 @@ const LoginModal = () => {
 		handleSubmit,
 		register,
 		formState: { isValid, errors },
-	} = useForm<IUserValue>({
+	} = useForm<IUserLogin>({
 		defaultValues: {
-			nickname: "",
 			email: "",
 			password: "",
 		},
 		resolver: yupResolver(LoginSchema),
 		mode: "onChange",
 	});
-	const { setModalContent } = useModal();
+	const { setModalContent, setModalShow } = useModal();
+	const { loading } = useSelector((state: RootState) => state.user);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const handleSignupModal = () => {
 		setModalContent(<SignupModal />);
 	};
 
-	const handleLogin = (values: IUserValue) => {
+	const handleLogin = async (values: IUserLogin) => {
 		if (!isValid) {
 			return;
 		}
-		console.log(values);
+		try {
+			await dispatch(
+				loginUser({ email: values.email, password: values.password })
+			);
+			setModalShow(false);
+			toast.success("Login successful");
+		} catch (error) {
+			toast.error("Login failed, please try again");
+		}
 	};
 
 	return (
@@ -54,8 +69,8 @@ const LoginModal = () => {
 			<p className="mt-4 text-slate-400">Glad to see you back 🎉</p>
 			{/* form inputs */}
 			<form
-				onSubmit={handleSubmit(handleLogin)}
 				className="flex flex-col flex-1 gap-5 mt-6"
+				onSubmit={handleSubmit(handleLogin)}
 			>
 				<Input
 					valueName="email"
@@ -71,12 +86,9 @@ const LoginModal = () => {
 					register={register}
 					errorMessage={errors?.password?.message}
 				/>
-				<button
-					type="submit"
-					className="w-full p-3 mt-2 text-white rounded-md select-none bg-primary hover:bg-primary-hover"
-				>
+				<Button loading={loading} type="submit">
 					Login
-				</button>
+				</Button>
 				<p className="mt-4 select-none text-slate-400">
 					Haven't an account?{" "}
 					<span

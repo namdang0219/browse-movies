@@ -27,7 +27,7 @@ const HeaderBar = () => {
 					</button>
 				</div>
 				{user ? (
-					<div className="flex items-center gap-2">
+					<div className="flex justify-end items-center gap-2 w-[220px] shrink-0">
 						<div className="text-end">
 							<p className="font-semibold">
 								{user.displayName?.slice(0, 15)}

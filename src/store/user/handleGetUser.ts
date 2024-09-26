@@ -29,8 +29,6 @@ export default function* handleGetUser() {
 		const user: User = yield call(requestUser);
 		if (user) {
 			yield put(setUser(user));
-		} else {
-			toast.error("No user is authenticated");
 		}
 	} catch (error: any) {
 		toast.error("Error fetching user:" + error.message);

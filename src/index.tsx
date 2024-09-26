@@ -3,7 +3,7 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "store/store";
@@ -21,7 +21,13 @@ root.render(
 			<ModalProvider>
 				<Modal />
 				<App />
-				<ToastContainer />
+				<ToastContainer
+					hideProgressBar
+					position="top-center"
+					pauseOnHover={false}
+					closeOnClick={false}
+					transition={Slide}
+				/>
 			</ModalProvider>
 		</BrowserRouter>
 	</Provider>

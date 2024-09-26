@@ -81,10 +81,6 @@ const MovieDetailPage = () => {
 										{movieDetail?.original_language}
 									</p>
 									<p>Genres: {genres.join(", ")}</p>
-									<p>
-										Release Date:{" "}
-										{movieDetail?.release_date}
-									</p>
 								</div>
 							</div>
 						</div>

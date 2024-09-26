@@ -4,10 +4,14 @@ import MoonIcon from "../../components/icon/nav/MoonIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { toggleDarkMode } from "store/global/globalSlice";
+import { auth } from "firebase-config";
+import { toast } from "react-toastify";
+import { setUser } from "store/user/userSlice";
 
 const Logout = () => {
 	const [showSetting, setShowSetting] = useState<boolean>(false);
 	const { darkMode } = useSelector((state: RootState) => state.global);
+	const { user } = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch();
 	const settingBoxRef = useRef<HTMLDivElement>(null);
 
@@ -32,12 +36,32 @@ const Logout = () => {
 		}
 	}, [showSetting]);
 
+	const handleLogout = async () => {
+		try {
+			await auth.signOut();
+			dispatch(setUser(null));
+			toast.success("Logged out successfully");
+		} catch (error) {
+			toast.error("Something went wrong, please try again");
+		}
+	};
+
 	return (
 		<div className="relative flex items-center justify-between p-4">
-			<button className="flex items-center gap-4 py-2.5 pl-3 rounded-md transition-all">
-				<LogoutIcon></LogoutIcon>
-				<span>Log Out</span>
-			</button>
+			{/* log out  */}
+			{user ? (
+				<button
+					className="flex items-center gap-4 pl-4 pr-8 py-2.5 dark:hover:bg-slate-700 rounded-md transition-all"
+					onClick={handleLogout}
+				>
+					<LogoutIcon></LogoutIcon>
+					<span>Log Out</span>
+				</button>
+			) : (
+				<div className="py-2.5 text-slate-500">Welcome Guest, 🎉</div>
+			)}
+
+			{/* setting icon  */}
 			<button
 				onClick={() => setShowSetting(!showSetting)}
 				className="pr-3 group"
@@ -56,6 +80,8 @@ const Logout = () => {
 					</svg>
 				</div>
 			</button>
+
+			{/* setting modal  */}
 			{showSetting && (
 				<div
 					ref={settingBoxRef}

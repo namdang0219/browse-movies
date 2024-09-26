@@ -10,8 +10,9 @@ import { createUser } from "store/user/userSlice";
 import { AppDispatch, RootState } from "store/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Button } from "components/button";
 
-export interface IUserValue {
+export interface IUserSignup {
 	nickname: string;
 	email: string;
 	password: string;
@@ -36,7 +37,7 @@ const SignupModal = () => {
 		handleSubmit,
 		register,
 		formState: { isValid, errors },
-	} = useForm<IUserValue>({
+	} = useForm<IUserSignup>({
 		defaultValues: {
 			nickname: "",
 			email: "",
@@ -53,7 +54,7 @@ const SignupModal = () => {
 		setModalContent(<LoginModal />);
 	};
 
-	const handleSignup = async (values: IUserValue) => {
+	const handleSignup = async (values: IUserSignup) => {
 		if (!isValid) {
 			return;
 		}
@@ -74,8 +75,8 @@ const SignupModal = () => {
 			<p className="mt-4 text-slate-400">Welcome to MyMovie 🎉</p>
 			{/* form inputs */}
 			<form
-				onSubmit={handleSubmit(handleSignup)}
 				className="flex flex-col flex-1 gap-5 mt-6"
+				onSubmit={handleSubmit(handleSignup)}
 			>
 				<Input
 					valueName="nickname"
@@ -97,16 +98,9 @@ const SignupModal = () => {
 					register={register}
 					errorMessage={errors?.password?.message}
 				/>
-				<button
-					type="submit"
-					className="flex items-center justify-center w-full h-12 mt-2 text-white rounded-md select-none bg-primary hover:bg-primary-hover"
-				>
-					{loading ? (
-						<div className="loader" />
-					) : (
-						<span>Sign Up</span>
-					)}
-				</button>
+				<Button loading={loading} type="submit">
+					Sign Up
+				</Button>
 				<p className="mt-4 select-none text-slate-400">
 					Already have an account?{" "}
 					<span
