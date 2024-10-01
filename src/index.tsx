@@ -27,6 +27,7 @@ root.render(
 					pauseOnHover={false}
 					closeOnClick={false}
 					transition={Slide}
+					autoClose={2000}
 				/>
 			</ModalProvider>
 		</BrowserRouter>

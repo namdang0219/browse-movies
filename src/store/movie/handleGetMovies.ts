@@ -28,14 +28,14 @@ function requestMovies() {
 
 export default function* handleGetMovies() {
 	try {
-		setLoadingMovies(true);
+		yield put(setLoadingMovies(true));
 		const response: Array<any> = yield call(requestMovies);
 		const [popular, nowplaying, upcoming, topRated] = response;
 		yield put(setPopularMovies(popular?.value?.data?.results));
 		yield put(setNowplayingMovies(nowplaying?.value?.data?.results));
 		yield put(setUpcomingMovies(upcoming?.value?.data?.results));
 		yield put(setTopRatedMovies(topRated?.value?.data?.results));
-		setLoadingMovies(false);
+		yield put(setLoadingMovies(false));
 	} catch (error) {
 		console.error("Error fetching movies:", error);
 	}

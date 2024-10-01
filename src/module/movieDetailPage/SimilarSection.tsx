@@ -31,4 +31,15 @@ const SimilarSection = ({
 	);
 };
 
+export const SimilarSectionSkeleton = () => {
+	return (
+		<div className="border rounded-xl border-borderColor overflow-hidden dark:border-borderColorDark h-[calc(100vh-60px-32px)] top-4 sticky flex flex-col">
+			<div className="flex items-center justify-center flex-shrink-0 h-12 dark:bg-borderColorDark bg-borderColor">
+				<span>Similar Movies</span>
+			</div>
+			<div className="flex-1 overflow-y-scroll custom-scroll"></div>
+		</div>
+	);
+};
+
 export default SimilarSection;

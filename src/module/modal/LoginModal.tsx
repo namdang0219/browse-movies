@@ -1,7 +1,7 @@
 import { Input } from "components/input";
 import { FormTitle } from "components/title";
 import { useForm } from "react-hook-form";
-import SignupModal from "./SignupModal";
+import SignupModal, { IAuthentication } from "./SignupModal";
 import { useModal } from "context/modal-context";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,13 +9,7 @@ import { Button } from "components/button";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import { loginUser } from "store/user/userSlice";
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-
-interface IUserLogin {
-	email: string;
-	password: string;
-}
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
@@ -32,7 +26,7 @@ const LoginModal = () => {
 		handleSubmit,
 		register,
 		formState: { isValid, errors },
-	} = useForm<IUserLogin>({
+	} = useForm<IAuthentication>({
 		defaultValues: {
 			email: "",
 			password: "",
@@ -41,25 +35,25 @@ const LoginModal = () => {
 		mode: "onChange",
 	});
 	const { setModalContent, setModalShow } = useModal();
-	const { loading } = useSelector((state: RootState) => state.user);
+	const { loading, error: loginError } = useSelector(
+		(state: RootState) => state.user
+	);
 	const dispatch = useDispatch<AppDispatch>();
 
 	const handleSignupModal = () => {
 		setModalContent(<SignupModal />);
 	};
 
-	const handleLogin = async (values: IUserLogin) => {
+	const handleLogin = async (values: IAuthentication) => {
 		if (!isValid) {
 			return;
 		}
-		try {
-			await dispatch(
-				loginUser({ email: values.email, password: values.password })
-			);
+		await dispatch(
+			loginUser({ email: values.email, password: values.password })
+		);
+		if (!loginError) {
+			console.log(loginError);
 			setModalShow(false);
-			toast.success("Login successful");
-		} catch (error) {
-			toast.error("Login failed, please try again");
 		}
 	};
 

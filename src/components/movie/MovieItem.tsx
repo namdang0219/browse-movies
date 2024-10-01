@@ -1,5 +1,7 @@
 import { StarIcon } from "components/icon/movieDetail";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "store/store";
 
 export interface IMovieItem {
 	id: string;
@@ -15,7 +17,11 @@ const MovieItem = ({
 	item: IMovieItem;
 }) => {
 	const navigate = useNavigate();
+	const { loadingMovies } = useSelector((state: RootState) => state.movie);
 
+	if (loadingMovies) {
+		return <MovieItemSkeleton />;
+	}
 	return (
 		<div
 			className="w-full rounded-md cursor-pointer select-none group"
@@ -37,6 +43,19 @@ const MovieItem = ({
 					<StarIcon />
 					<span>Vote: {vote_average}</span>
 				</p>
+			</div>
+		</div>
+	);
+};
+
+const MovieItemSkeleton = () => {
+	return (
+		<div className="w-full rounded-md">
+			<div className="w-full overflow-hidden rounded-md aspect-square skeleton"></div>
+			<div className="flex flex-col gap-2 p-2">
+				<div className="h-3 rounded-full skeleton"></div>
+				<div className="w-2/3 h-3 rounded-full skeleton"></div>
+				<div className="w-1/2 h-3 rounded-full skeleton"></div>
 			</div>
 		</div>
 	);

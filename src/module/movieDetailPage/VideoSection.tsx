@@ -36,4 +36,19 @@ const VideoSection = ({
 	);
 };
 
+export const VideoSectionSkeleton = () => {
+	return (
+		<div>
+			<SectionTitle>Videos</SectionTitle>
+			<div className="grid grid-cols-2 gap-4">
+				{Array(2)
+					.fill(null)
+					.map((item, index) => (
+						<div key={index} className="w-full aspect-video skeleton"></div>
+					))}
+			</div>
+		</div>
+	);
+};
+
 export default VideoSection;

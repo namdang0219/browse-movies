@@ -12,10 +12,10 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "components/button";
 
-export interface IUserSignup {
-	nickname: string;
+export interface IAuthentication {
 	email: string;
 	password: string;
+	[key: string]: string;
 }
 
 const SignupSchema = Yup.object({
@@ -37,36 +37,48 @@ const SignupModal = () => {
 		handleSubmit,
 		register,
 		formState: { isValid, errors },
-	} = useForm<IUserSignup>({
+	} = useForm<IAuthentication & { nickname: string }>({
 		defaultValues: {
-			nickname: "",
 			email: "",
 			password: "",
+			nickname: "",
 		},
 		resolver: yupResolver(SignupSchema),
 		mode: "onChange",
 	});
 	const { setModalContent, setModalShow } = useModal();
 	const dispatch = useDispatch<AppDispatch>();
-	const { loading } = useSelector((state: RootState) => state.user);
+	const { loading, error: userError } = useSelector(
+		(state: RootState) => state.user
+	);
 
 	const handleLoginModal = () => {
 		setModalContent(<LoginModal />);
 	};
 
-	const handleSignup = async (values: IUserSignup) => {
+	const handleSignup = async (values: IAuthentication) => {
 		if (!isValid) {
 			return;
 		}
-		await dispatch(
-			createUser({
-				email: values.email,
-				password: values.password,
-				displayName: values.nickname,
-			})
-		);
-		setModalShow(false);
-		toast.success("Create user successfully!");
+		try {
+			await dispatch(
+				createUser({
+					email: values.email,
+					password: values.password,
+					displayName: values.nickname,
+				})
+			);
+			if (userError === "Firebase: Error (auth/email-already-in-use).") {
+				toast.error("Email already in use");
+				return;
+			} else if (!userError) {
+				setModalShow(false);
+				toast.success("Create user successfully!");
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error("Something went wrong, please try again");
+		}
 	};
 
 	return (

@@ -3,13 +3,21 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import { apiLinks } from "util/constant/api-link";
 import { fetcher } from "util/func/fetcher";
-import CastSection from "../module/movieDetailPage/CastSection";
-import InfoSection from "module/movieDetailPage/InfoSection";
-import VideoSection from "module/movieDetailPage/VideoSection";
+import CastSection, {
+	CastSectionSkeleton,
+} from "../module/movieDetailPage/CastSection";
+import InfoSection, {
+	InfoSectionSkeleton,
+} from "module/movieDetailPage/InfoSection";
+import VideoSection, {
+	VideoSectionSkeleton,
+} from "module/movieDetailPage/VideoSection";
 import { StarIcon } from "components/icon/movieDetail";
 import { IGenre } from "store/genre/handleGetGenre";
 import ReviewSection from "module/movieDetailPage/ReviewSection";
-import SimilarSection from "module/movieDetailPage/SimilarSection";
+import SimilarSection, {
+	SimilarSectionSkeleton,
+} from "module/movieDetailPage/SimilarSection";
 import { useEffect } from "react";
 
 const MovieDetailPage = () => {
@@ -28,14 +36,7 @@ const MovieDetailPage = () => {
 	const genres: string[] =
 		movieDetail?.genres.map((g: IGenre) => g.name) || [];
 
-	if (isLoading)
-		return (
-			<MainLayout>
-				<div className="flex items-center justify-center h-16">
-					Loading...
-				</div>
-			</MainLayout>
-		);
+	if (isLoading) return <MovieDetailSkeleton />;
 
 	return (
 		<MainLayout>
@@ -107,6 +108,52 @@ const MovieDetailPage = () => {
 				{/* similar movies container  */}
 				<div className="p-4">
 					<SimilarSection movieId={movieId} />
+				</div>
+			</div>
+		</MainLayout>
+	);
+};
+
+const MovieDetailSkeleton = () => {
+	return (
+		<MainLayout>
+			<div className=" grid grid-cols-[1fr_400px] relative">
+				{/* movie detail container  */}
+				<div className="px-4 pt-4 mb-20">
+					{/* banner  */}
+					<div className="w-full aspect-[16/6] rounded-lg overflow-hidden skeleton"></div>
+
+					{/* detail container  */}
+					<div className="px-20 mb-6">
+						{/* poster and detail */}
+						<div className="flex items-center gap-6 mt-8">
+							{/* poster  */}
+							<div className="w-[160px] skeleton aspect-[3/4] flex items-center justify-center"></div>
+
+							{/* detail  */}
+							<div className="flex flex-col w-1/2 gap-1">
+								<div className="h-6 mb-4 rounded-full skeleton"></div>
+								<div className="flex flex-col gap-4">
+									<div className="h-4 rounded-full skeleton"></div>
+									<div className="w-2/3 h-4 rounded-full skeleton"></div>
+									<div className="w-1/2 h-4 rounded-full skeleton"></div>
+									<div className="w-1/3 h-4 rounded-full skeleton"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* main  */}
+					<div className="flex flex-col gap-8 px-20">
+						<InfoSectionSkeleton />
+						<CastSectionSkeleton />
+						<VideoSectionSkeleton />
+					</div>
+				</div>
+
+				{/* similar movies container  */}
+				<div className="p-4">
+					<SimilarSectionSkeleton />
 				</div>
 			</div>
 		</MainLayout>

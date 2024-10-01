@@ -1,5 +1,7 @@
 import useMovieGenres from "hook/useMovieGenres";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "store/store";
 import { apiLinks } from "util/constant/api-link";
 
 interface IBannerItem {
@@ -16,7 +18,12 @@ const BannerItem = ({
 	item: IBannerItem;
 }) => {
 	const navigate = useNavigate();
+	const { loadingMovies } = useSelector((state: RootState) => state.movie);
 	const movieGenres = useMovieGenres(genre_ids);
+
+	if (loadingMovies) {
+		return <BannerItemSkeleton />;
+	}
 
 	return (
 		<div
@@ -53,6 +60,10 @@ const BannerItem = ({
 			</div>
 		</div>
 	);
+};
+
+const BannerItemSkeleton = () => {
+	return <div className="w-full h-[520px] skeleton rounded-lg"></div>;
 };
 
 export default BannerItem;

@@ -6,6 +6,7 @@ import {
 	updateProfile,
 	User,
 } from "firebase/auth";
+import { toast } from "react-toastify";
 
 interface IInitialState {
 	user: User | null;
@@ -59,12 +60,14 @@ export const loginUser = createAsyncThunk(
 				password
 			);
 			const user: User = userCredential.user;
+			toast.success('User logged in successfully')
 			return {
 				uid: user.uid,
 				displayName: user.displayName,
 				email: user.email,
 			};
 		} catch (error: any) {
+			toast.error(error.message);
 			return rejectWithValue(error.message);
 		}
 	}
