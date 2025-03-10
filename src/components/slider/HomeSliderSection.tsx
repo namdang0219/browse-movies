@@ -1,4 +1,5 @@
 import { MovieItem } from "components/movie";
+import { useLanguage } from "hook/useLanguage";
 import { Link } from "react-router-dom";
 import { SwiperSlide, Swiper } from "swiper/react";
 
@@ -19,7 +20,7 @@ const HomeSliderSection = ({
 					<SeeMoreButton />
 				</Link>
 			</div>
-			<div className="mt-3">
+			<div className="mt-4">
 				<Swiper slidesPerView={5} spaceBetween={30}>
 					{movieList &&
 						movieList.map((m: any) => (
@@ -34,9 +35,11 @@ const HomeSliderSection = ({
 };
 
 const SeeMoreButton = () => {
+	const en = useLanguage().isEnglish
+
 	return (
 		<div className="flex items-center gap-1 transition-all dark:text-slate-500 dark:hover:text-slate-200">
-			<span>See More</span>
+			<span>{en ? 'See More': 'すべて'}</span>
 			<span>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

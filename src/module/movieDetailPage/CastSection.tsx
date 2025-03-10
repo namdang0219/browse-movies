@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { apiLinks } from "util/constant/api-link";
 import { fetcher } from "util/func/fetcher";
 import SectionTitle from "../../components/title/SectionTitle";
+import { useLanguage } from "hook/useLanguage";
 
 const CastSection = ({ movieId }: { movieId: number | string | undefined }) => {
 	const { data: credits } = useSWR(
@@ -10,10 +11,11 @@ const CastSection = ({ movieId }: { movieId: number | string | undefined }) => {
 		fetcher
 	);
 	const casts = credits?.cast || [];
+	const en = useLanguage().isEnglish;
 
 	return (
 		<div>
-			<SectionTitle>Casts</SectionTitle>
+			<SectionTitle>{en ? "Casts" : "出演者"}</SectionTitle>
 			<div className="w-[calc(100vw-400px-240px-40px-160px)]">
 				<Swiper slidesPerView={5} spaceBetween={20}>
 					{casts.length > 0 &&

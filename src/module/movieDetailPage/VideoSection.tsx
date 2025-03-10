@@ -2,6 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import { fetcher } from "util/func/fetcher";
 import SectionTitle from "../../components/title/SectionTitle";
+import { useLanguage } from "hook/useLanguage";
 
 const VideoSection = ({
 	movieId,
@@ -13,10 +14,11 @@ const VideoSection = ({
 		fetcher
 	);
 	const videos = data?.results || [];
+	const en = useLanguage().isEnglish
 
 	return (
 		<div>
-			<SectionTitle>Videos</SectionTitle>
+			<SectionTitle>{en ? 'Videos': '予告編'}</SectionTitle>
 			<div className="grid grid-cols-2 gap-4">
 				{videos.length > 0 &&
 					videos.slice(0, 4).map((video: any) => (

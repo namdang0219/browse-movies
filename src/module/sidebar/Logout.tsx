@@ -3,20 +3,32 @@ import { useEffect, useRef, useState } from "react";
 import MoonIcon from "../../components/icon/nav/MoonIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { toggleDarkMode } from "store/global/globalSlice";
+import { changeLanguage, toggleDarkMode } from "store/global/globalSlice";
 import { auth } from "firebase-config";
 import { toast } from "react-toastify";
 import { setUser } from "store/user/userSlice";
+import { useLanguage } from "hook/useLanguage";
 
 const Logout = () => {
 	const [showSetting, setShowSetting] = useState<boolean>(false);
-	const { darkMode } = useSelector((state: RootState) => state.global);
+	const { darkMode, language } = useSelector(
+		(state: RootState) => state.global
+	);
+	const en = useLanguage().isEnglish;
 	const { user } = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch();
 	const settingBoxRef = useRef<HTMLDivElement>(null);
 
 	const handleDarkMode = () => {
 		dispatch(toggleDarkMode());
+	};
+
+	const handleLanguage = () => {
+		if (language === "en") {
+			dispatch(changeLanguage("ja"));
+		} else if (language === "ja") {
+			dispatch(changeLanguage("en"));
+		}
 	};
 
 	useEffect(() => {
@@ -55,10 +67,12 @@ const Logout = () => {
 					onClick={handleLogout}
 				>
 					<LogoutIcon></LogoutIcon>
-					<span>Log Out</span>
+					<span>{language === "en" ? "Log Out" : "ログアウト"}</span>
 				</button>
 			) : (
-				<div className="py-2.5 text-slate-500">Welcome Guest, 🎉</div>
+				<div className="py-2.5 text-slate-500">
+					{en ? "Welcome Guest," : "ようこそ"} 🎉
+				</div>
 			)}
 
 			{/* setting icon  */}
@@ -85,19 +99,37 @@ const Logout = () => {
 			{showSetting && (
 				<div
 					ref={settingBoxRef}
-					className={`absolute w-[180px] p-1 z-10 border border-borderColor dark:border-borderColorDark dark:bg-slate-900 bottom-16 right-6 rounded-md`}
+					className={`absolute  select-none w-[180px] p-1 z-10 border border-borderColor dark:border-borderColorDark dark:bg-slate-900 bottom-16 right-6 rounded-md`}
 				>
+					{/* handleDarkMode */}
 					<div
 						onClick={handleDarkMode}
 						className="flex items-center justify-between p-2 rounded-md cursor-pointer top-10 left-10 dark:hover:bg-slate-700 hover:bg-slate-200"
 					>
-						<span>Dark Mode</span>
+						<span>{en ? "Dark Mode" : "ダーク"}</span>
 						<div className="flex items-center gap-2">
 							<span className="dark:text-slate-500 text-slate-300">
-								{darkMode ? "On" : "Off"}
+								{darkMode
+									? language === "en"
+										? "On"
+										: "オン"
+									: language === "en"
+									? "Off"
+									: "オフ"}
 							</span>
 							<span>{darkMode ? <MoonIcon /> : <SunIcon />}</span>
 						</div>
+					</div>
+
+					{/* handleLanguage  */}
+					<div
+						onClick={handleLanguage}
+						className="flex items-center justify-between p-2 rounded-md cursor-pointer hover:text-black dark:hover:text-slate-100 top-10 left-10 dark:hover:bg-slate-700 hover:bg-slate-200"
+					>
+						<span>{en ? "Language" : "言語"}</span>
+						<span className="dark:text-slate-500 text-slate-300">
+							en/ja
+						</span>
 					</div>
 				</div>
 			)}

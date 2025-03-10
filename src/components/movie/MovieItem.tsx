@@ -1,4 +1,5 @@
 import { StarIcon } from "components/icon/movieDetail";
+import { useLanguage } from "hook/useLanguage";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "store/store";
@@ -17,6 +18,7 @@ const MovieItem = ({
 	item: IMovieItem;
 }) => {
 	const navigate = useNavigate();
+	const en = useLanguage().isEnglish;
 	const { loadingMovies } = useSelector((state: RootState) => state.movie);
 
 	if (loadingMovies) {
@@ -41,7 +43,9 @@ const MovieItem = ({
 				<p className="mt-1 text-sm line-clamp-2">{overview}</p>
 				<p className="flex items-center gap-1 mt-1 text-sm">
 					<StarIcon />
-					<span>Vote: {vote_average}</span>
+					<span>
+						{en ? "Vote:" : "評価："}{vote_average}
+					</span>
 				</p>
 			</div>
 		</div>

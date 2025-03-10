@@ -1,9 +1,12 @@
+import { useLanguage } from "hook/useLanguage";
 import SectionTitle from "../../components/title/SectionTitle";
 
 const InfoSection = ({ movieDetail }: { movieDetail: any }) => {
+	const en = useLanguage().isEnglish
+
 	return (
 		<div>
-			<SectionTitle>Overview</SectionTitle>
+			<SectionTitle>{en ? 'Overview': '概要'}</SectionTitle>
 			<p className="leading-relaxed">{movieDetail?.overview}</p>
 		</div>
 	);

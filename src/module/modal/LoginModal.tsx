@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import { loginUser } from "store/user/userSlice";
 import { useSelector } from "react-redux";
+import { useLanguage } from "hook/useLanguage";
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
@@ -57,10 +58,14 @@ const LoginModal = () => {
 		}
 	};
 
+	const en = useLanguage().isEnglish;
+
 	return (
 		<div className="text-center w-[400px]">
-			<FormTitle>Login</FormTitle>
-			<p className="mt-4 text-slate-400">Glad to see you back 🎉</p>
+			<FormTitle>{en ? "Login" : "ログイン"}</FormTitle>
+			<p className="mt-4 text-slate-400">
+				{en ? "Glad to see you back 🎉" : "お帰りなさい 🎉"}
+			</p>
 			{/* form inputs */}
 			<form
 				className="flex flex-col flex-1 gap-5 mt-6"
@@ -69,27 +74,29 @@ const LoginModal = () => {
 				<Input
 					valueName="email"
 					type="email"
-					placeholder="Email"
+					placeholder={en ? "Email" : "メール"}
 					register={register}
 					errorMessage={errors?.email?.message}
 				/>
 				<Input
 					valueName="password"
 					type="password"
-					placeholder="Password"
+					placeholder={en ? "Password" : "パスワード"}
 					register={register}
 					errorMessage={errors?.password?.message}
 				/>
 				<Button loading={loading} type="submit">
-					Login
+					{en ? "Login" : "ログイン"}
 				</Button>
 				<p className="mt-4 select-none text-slate-400">
-					Haven't an account?{" "}
+					{en
+						? "Don't have an account?"
+						: "アカウントをお持ちでない方は？"}
 					<span
 						className="cursor-pointer text-slate-600 hover:text"
 						onClick={handleSignupModal}
 					>
-						Sign up
+						{en ? "Signup" : "登録"}
 					</span>
 				</p>
 			</form>

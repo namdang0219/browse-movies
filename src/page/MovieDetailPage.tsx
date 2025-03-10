@@ -19,6 +19,7 @@ import SimilarSection, {
 	SimilarSectionSkeleton,
 } from "module/movieDetailPage/SimilarSection";
 import { useEffect } from "react";
+import { useLanguage } from "hook/useLanguage";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
@@ -26,6 +27,7 @@ const MovieDetailPage = () => {
 		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_DB_KEY}`,
 		fetcher
 	);
+	const en = useLanguage().isEnglish;
 
 	const title = movieDetail?.title || "Loading...";
 
@@ -73,7 +75,7 @@ const MovieDetailPage = () => {
 								<div className="flex flex-col gap-1 text-slate-400">
 									<p className="flex items-center gap-2">
 										<span>
-											Rate:{" "}
+											{en ? "Rate:" : "評価："}
 											{movieDetail?.vote_average.toFixed(
 												1
 											)}
@@ -81,14 +83,17 @@ const MovieDetailPage = () => {
 										<StarIcon />
 									</p>
 									<p>
-										Release Date:{" "}
+										{en ? "Release Date:" : "公開日："}
 										{movieDetail?.release_date}
 									</p>
 									<p>
-										Language:{" "}
+										{en ? "Language:" : "言語："}
 										{movieDetail?.original_language}
 									</p>
-									<p>Genres: {genres.join(", ")}</p>
+									<p>
+										{en ? "Genres:" : "ジャンル："}
+										{genres.join(", ")}
+									</p>
 								</div>
 							</div>
 						</div>

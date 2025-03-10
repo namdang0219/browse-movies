@@ -1,3 +1,4 @@
+import { useLanguage } from "hook/useLanguage";
 import useMovieGenres from "hook/useMovieGenres";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const BannerItem = ({
 	item: IBannerItem;
 }) => {
 	const navigate = useNavigate();
+	const en = useLanguage().isEnglish;
 	const { loadingMovies } = useSelector((state: RootState) => state.movie);
 	const movieGenres = useMovieGenres(genre_ids);
 
@@ -37,8 +39,8 @@ const BannerItem = ({
 			/>
 			<div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black to-50% to-transparent p-6 flex flex-col justify-end">
 				<div className="text-white">
-					<span className="px-2 py-1 text-[10px] leading-none uppercase rounded-sm bg-primary">
-						upcoming
+					<span className="px-2 py-1 text-[10px] leading-none uppercase rounded bg-primary">
+						{en ? "upcoming" : "公開予定"}
 					</span>
 					<h2 className="mt-2 text-3xl">{title}</h2>
 					<p className="w-full max-w-[75%] line-clamp-3 mt-2">

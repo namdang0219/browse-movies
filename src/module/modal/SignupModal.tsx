@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from "store/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "components/button";
+import { useLanguage } from "hook/useLanguage";
 
 export interface IAuthentication {
 	email: string;
@@ -81,10 +82,14 @@ const SignupModal = () => {
 		}
 	};
 
+	const en = useLanguage().isEnglish;
+
 	return (
 		<div className="text-center w-[400px]">
-			<FormTitle>Sign Up</FormTitle>
-			<p className="mt-4 text-slate-400">Welcome to MyMovie 🎉</p>
+			<FormTitle>{en ? "Sign Up" : "新規登録"}</FormTitle>
+			<p className="mt-4 text-slate-400">
+				{en ? "Welcome to MyMovie 🎉" : "MyMovie へようこそ 🎉"}
+			</p>
 			{/* form inputs */}
 			<form
 				className="flex flex-col flex-1 gap-5 mt-6"
@@ -92,34 +97,36 @@ const SignupModal = () => {
 			>
 				<Input
 					valueName="nickname"
-					placeholder="Nickname"
+					placeholder={en ? "Nickname" : "ユーザー名"}
 					register={register}
 					errorMessage={errors?.nickname?.message}
 				/>
 				<Input
 					valueName="email"
 					type="email"
-					placeholder="Email"
+					placeholder={en ? "Email" : "メール"}
 					register={register}
 					errorMessage={errors?.email?.message}
 				/>
 				<Input
 					valueName="password"
 					type="password"
-					placeholder="Password"
+					placeholder={en ? "Password" : "パスワード"}
 					register={register}
 					errorMessage={errors?.password?.message}
 				/>
 				<Button loading={loading} type="submit">
-					Sign Up
+					{en ? "Sign Up" : "登録"}
 				</Button>
 				<p className="mt-4 select-none text-slate-400">
-					Already have an account?{" "}
+					{en
+						? "Already have an account?"
+						: "既にアカウントお持ちの方？"}
 					<span
 						className="cursor-pointer text-slate-600 hover:text"
 						onClick={handleLoginModal}
 					>
-						Login
+						{en ? "Login" : "ログイン"}
 					</span>
 				</p>
 			</form>

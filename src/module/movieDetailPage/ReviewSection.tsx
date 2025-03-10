@@ -2,6 +2,7 @@ import SectionTitle from "../../components/title/SectionTitle";
 import useSWR from "swr";
 import { fetcher } from "util/func/fetcher";
 import { apiLinks } from "util/constant/api-link";
+import { useLanguage } from "hook/useLanguage";
 
 const ReviewSection = ({
 	movieId,
@@ -13,10 +14,11 @@ const ReviewSection = ({
 		fetcher
 	);
 	const reviews = data?.results || [];
+	const en = useLanguage().isEnglish;
 
 	return (
 		<div>
-			<SectionTitle>Top Reviews</SectionTitle>
+			<SectionTitle>{en ? 'Top Reviews': 'レビュー'}</SectionTitle>
 			<div className="flex flex-col gap-6">
 				{reviews.length > 0 &&
 					reviews.map((review: any) => (

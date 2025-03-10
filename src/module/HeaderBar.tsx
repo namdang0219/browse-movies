@@ -2,10 +2,12 @@ import { useModal } from "context/modal-context";
 import SignupModal from "./modal/SignupModal";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useLanguage } from "hook/useLanguage";
 
 const HeaderBar = () => {
 	const { setModalShow, setModalContent } = useModal();
 	const { user } = useSelector((state: RootState) => state.user);
+	const en = useLanguage().isEnglish;
 
 	const handleLoginModal = () => {
 		setModalContent(<SignupModal />);
@@ -15,15 +17,15 @@ const HeaderBar = () => {
 	return (
 		<div className="h-[60px] border-b border-b-borderColor dark:border-b-borderColorDark flex items-center">
 			<div className="flex items-center justify-between flex-1 h-[40px] gap-6 px-4">
-				<span>Home</span>
+				<span>🎬</span>
 				<div className="flex items-center gap-2 p-0.5 rounded-full h-full border border-borderColor dark:border-borderColorDark w-full max-w-[400px]">
 					<input
 						type="text"
 						className="flex-1 h-full px-4 rounded-full outline-none bg-inherit"
-						placeholder="Search..."
+						placeholder={en? "Search...": '検索...'}
 					/>
 					<button className="flex items-center justify-center h-full px-3 text-sm leading-none text-white transition-all rounded-full bg-primary hover:bg-primary-hover">
-						Search
+						{en ? "Search" : "検索"}
 					</button>
 				</div>
 				{user ? (
@@ -48,7 +50,7 @@ const HeaderBar = () => {
 							onClick={handleLoginModal}
 							className="h-full px-5 text-white transition-all rounded-full hover:bg-primary-hover bg-primary"
 						>
-							Sign Up
+							{en ? 'Sign Up': '新規登録'}
 						</button>
 					</div>
 				)}
