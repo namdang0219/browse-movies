@@ -29,7 +29,7 @@ const BannerItem = ({
 
 	return (
 		<div
-			className="relative w-full h-[520px] rounded-lg overflow-hidden"
+			className="relative w-full h-[520px] rounded-lg overflow-hidden cursor-pointer"
 			onClick={() => navigate(`/detail/${id}`)}
 		>
 			<img

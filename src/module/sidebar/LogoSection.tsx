@@ -1,8 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogoSection = () => {
+	const navigate = useNavigate();
+
 	return (
-		<div className="flex items-center gap-2 p-4">
+		<div
+			className="flex items-center gap-2 p-4 cursor-pointer"
+			onClick={() => navigate("/")}
+		>
 			<span>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

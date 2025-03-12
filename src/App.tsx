@@ -3,6 +3,7 @@ import MovieDetailPage from "page/MovieDetailPage";
 import NowPlayingPage from "page/NowPlayingPage";
 import PageNotFound from "page/PageNotFound";
 import PopularPage from "page/PopularPage";
+import SearchResultPage from "page/SearchResultPage";
 import TopRatedPage from "page/TopRatedPage";
 import UpcomingPage from "page/UpcomingPage";
 import { useEffect } from "react";
@@ -29,6 +30,7 @@ const App = () => {
 			<Route path="/now-playing" element={<NowPlayingPage />} />
 			<Route path="/up-coming" element={<UpcomingPage />} />
 			<Route path="/detail/:movieId" element={<MovieDetailPage />} />
+			<Route path="/search" element={<SearchResultPage />} />
 			<Route path="*" element={<PageNotFound />} />
 		</Routes>
 	);
