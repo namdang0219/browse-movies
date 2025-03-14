@@ -42,7 +42,7 @@ const HeaderBar = () => {
 	return (
 		<div className="h-[60px] border-b border-b-borderColor dark:border-b-borderColorDark flex items-center">
 			<div className="flex items-center justify-between flex-1 h-[40px] gap-6 px-4">
-				<span>🎬</span>
+				<span className="text-lg">🎬</span>
 
 				{/* search */}
 				<div className="flex relative items-center gap-2 p-0.5 rounded-full h-full border border-borderColor dark:border-borderColorDark w-full max-w-[400px]">

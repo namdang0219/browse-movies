@@ -1,8 +1,6 @@
 import MainLayout from "layout/MainLayout";
 import { useParams } from "react-router-dom";
-import useSWR from "swr";
 import { apiLinks } from "util/constant/api-link";
-import { fetcher } from "util/func/fetcher";
 import CastSection, {
 	CastSectionSkeleton,
 } from "../module/movieDetailPage/CastSection";
@@ -28,14 +26,15 @@ import {
 import { AppDispatch, RootState } from "store/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useMovieDetail } from "hook/useMovieDetail";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
-	const { data: movieDetail, isLoading } = useSWR(
-		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_DB_KEY}`,
-		fetcher
-	);
+
+	const { isLoading, movieDetail } = useMovieDetail(movieId as string);
+
 	const en = useLanguage().isEnglish;
+
 	const dispatch = useDispatch<AppDispatch>();
 	const { favorite, favoriteLoading } = useSelector(
 		(state: RootState) => state.userMovie
@@ -59,8 +58,6 @@ const MovieDetailPage = () => {
 			toast.success(en ? "Movie is removed 🎉" : "映画削除済み！🎉");
 		}
 	};
-
-	console.log(favorite);
 
 	if (isLoading) return <MovieDetailSkeleton />;
 
@@ -121,21 +118,21 @@ const MovieDetailPage = () => {
 
 									<button
 										onClick={handleFavoriteMovie}
-										className="flex items-center justify-center w-20 mt-2 text-white transition-all bg-pink-500 rounded-md h-9 hover:bg-pink-600"
+										className="flex items-center justify-center w-40 mt-2 text-sm text-white transition-all bg-pink-500 rounded-md h-9 hover:bg-pink-600"
 									>
 										{favoriteLoading ? (
 											<div className="loader" />
 										) : favorite &&
 										  favorite.includes(String(movieId)) ? (
 											en ? (
-												"Delete"
+												"Delete from Favorite"
 											) : (
-												"削除"
+												"お気に入りから削除"
 											)
 										) : en ? (
-											"Save"
+											"Save to Favorite"
 										) : (
-											"保存"
+											"お気に入りに追加"
 										)}
 									</button>
 								</div>

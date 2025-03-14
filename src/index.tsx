@@ -6,10 +6,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import { store } from "store/store";
+import { persistor, store } from "store/store";
 import "swiper/css";
 import { ModalProvider } from "context/modal-context";
 import { Modal } from "components/modal";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -17,20 +18,22 @@ const root = ReactDOM.createRoot(
 root.render(
 	// <React.StrictMode>
 	<Provider store={store}>
-		<BrowserRouter>
-			<ModalProvider>
-				<Modal />
-				<App />
-				<ToastContainer
-					hideProgressBar
-					position="top-center"
-					pauseOnHover={false}
-					closeOnClick={false}
-					transition={Slide}
-					autoClose={2000}
-				/>
-			</ModalProvider>
-		</BrowserRouter>
+		<PersistGate loading={null} persistor={persistor}>
+			<BrowserRouter>
+				<ModalProvider>
+					<Modal />
+					<App />
+					<ToastContainer
+						hideProgressBar
+						position="top-center"
+						pauseOnHover={false}
+						closeOnClick={false}
+						transition={Slide}
+						autoClose={2000}
+					/>
+				</ModalProvider>
+			</BrowserRouter>
+		</PersistGate>
 	</Provider>
 	// </React.StrictMode>
 );

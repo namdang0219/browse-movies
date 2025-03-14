@@ -5,6 +5,7 @@ import {
 	NowPlayingIcon,
 	UpcomingIcon,
 } from "components/icon/nav";
+import SaveIcon from "components/icon/nav/SaveIcon";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -14,7 +15,7 @@ const Nav = () => {
 	const { language } = useSelector((state: RootState) => state.global);
 
 	return (
-		<div className="flex flex-col flex-1 gap-2 p-4">
+		<div className="flex flex-col gap-2 p-4">
 			{navigations.map((n, idx) => (
 				<div key={idx}>
 					<NavLink
@@ -67,6 +68,11 @@ const navigations: INavagations[] = [
 		label: { en: "Up Coming", ja: "公開予定" },
 		to: "/up-coming",
 		icon: <UpcomingIcon />,
+	},
+	{
+		label: { en: "Favorites", ja: "お気に入り" },
+		to: "/saved",
+		icon: <SaveIcon />,
 	},
 ];
 

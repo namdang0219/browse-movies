@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { db } from "firebase-config";
-import {
-	arrayRemove,
-	arrayUnion,
-	doc,
-	getDoc,
-	updateDoc,
-} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 interface IUserMovie {
 	favoriteLoading: boolean;
@@ -23,12 +17,6 @@ export const addToUserFavorite = createAsyncThunk(
 	async (movieId: string, { rejectWithValue }) => {
 		const docRef = doc(db, "userData", "492ku7m1TrkyqdBDLlWR");
 		await updateDoc(docRef, { favorite: arrayUnion(movieId) });
-		const newDocData = (await getDoc(docRef)).data();
-		if (!newDocData) {
-			return rejectWithValue("error");
-		}
-		const newFavorite = newDocData.favorite;
-		return newFavorite;
 	}
 );
 
@@ -37,19 +25,20 @@ export const removeFromUserFavorite = createAsyncThunk(
 	async (movieId: string, { rejectWithValue }) => {
 		const docRef = doc(db, "userData", "492ku7m1TrkyqdBDLlWR");
 		await updateDoc(docRef, { favorite: arrayRemove(movieId) });
-		const newDocData = (await getDoc(docRef)).data();
-		if (!newDocData) {
-			return rejectWithValue("error");
-		}
-		const newFavorite = newDocData.favorite;
-		return newFavorite;
 	}
 );
 
 const userMovieSlice = createSlice({
 	name: "userMovie",
 	initialState,
-	reducers: {},
+	reducers: {
+		setFavorite: (state, action) => {
+			return {
+				...state,
+				favorite: action.payload,
+			};
+		},
+	},
 	extraReducers: (builder) => {
 		// addToUserFavorite
 		builder.addCase(addToUserFavorite.pending, (state, action) => {
@@ -57,7 +46,6 @@ const userMovieSlice = createSlice({
 		});
 		builder.addCase(addToUserFavorite.fulfilled, (state, action) => {
 			state.favoriteLoading = false;
-			state.favorite = action.payload;
 		});
 
 		// removeFromUserFavorite
@@ -66,9 +54,10 @@ const userMovieSlice = createSlice({
 		});
 		builder.addCase(removeFromUserFavorite.fulfilled, (state, action) => {
 			state.favoriteLoading = false;
-			state.favorite = action.payload;
 		});
 	},
 });
+
+export const { setFavorite } = userMovieSlice.actions;
 
 export default userMovieSlice.reducer;

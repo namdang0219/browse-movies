@@ -1,5 +1,7 @@
+import { useFavorite } from "hook/useFavorite";
 import HomePage from "page/HomePage";
 import MovieDetailPage from "page/MovieDetailPage";
+import MovieSavedPage from "page/MovieSavedPage";
 import NowPlayingPage from "page/NowPlayingPage";
 import PageNotFound from "page/PageNotFound";
 import PopularPage from "page/PopularPage";
@@ -15,6 +17,7 @@ import { getUser } from "store/user/userSlice";
 
 const App = () => {
 	const dispatch = useDispatch();
+	useFavorite();
 
 	useEffect(() => {
 		dispatch(getMovies());
@@ -29,6 +32,7 @@ const App = () => {
 			<Route path="/top-rated" element={<TopRatedPage />} />
 			<Route path="/now-playing" element={<NowPlayingPage />} />
 			<Route path="/up-coming" element={<UpcomingPage />} />
+			<Route path="/saved" element={<MovieSavedPage />} />
 			<Route path="/detail/:movieId" element={<MovieDetailPage />} />
 			<Route path="/search" element={<SearchResultPage />} />
 			<Route path="*" element={<PageNotFound />} />
