@@ -10,6 +10,7 @@ import { useLanguage } from "hook/useLanguage";
 const Sidebar = () => {
 	const en = useLanguage().isEnglish;
 	const { favorite } = useSelector((state: RootState) => state.userMovie);
+	const navigate = useNavigate();
 
 	const reversedFavorite = [...favorite].reverse() || [];
 
@@ -60,7 +61,7 @@ const Sidebar = () => {
 							... + {reversedFavorite.length - 5}{" "}
 							{en ? "movies" : "映画"}
 						</div>
-						<div className="flex items-center justify-center w-6 text-white transition-all rounded-full cursor-pointer aspect-square bg-slate-600 hover:bg-pink-500">
+						<div onClick={() => navigate('/saved')} className="flex items-center justify-center w-6 text-white transition-all rounded-full cursor-pointer aspect-square bg-slate-600 hover:bg-pink-500">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width={14}
@@ -111,7 +112,7 @@ const SidebarSavedMovieItem = ({ movieId }: { movieId: string }) => {
 					></path>
 				</svg>
 			</span>
-			{movieDetail?.title}
+			<span className="flex-1 line-clamp-1">{movieDetail?.title}</span>
 		</li>
 	);
 };
