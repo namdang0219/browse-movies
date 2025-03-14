@@ -1,5 +1,4 @@
 import MovieSimilarItem, { ISimilar } from "components/movie/MovieSimilarItem";
-import { SectionTitle } from "components/title";
 import { useLanguage } from "hook/useLanguage";
 import useSWR from "swr";
 import { fetcher } from "util/func/fetcher";
@@ -18,8 +17,8 @@ const SimilarSection = ({
 
 	return (
 		<div className="border rounded-xl border-borderColor overflow-hidden dark:border-borderColorDark h-[calc(100vh-60px-32px)] top-4 sticky flex flex-col">
-			<div className="flex items-center justify-center py-3 border-b bg-slate-800 border-b-borderColor dark:border-borderColorDark">
-				<span>{en? 'Similar Movies': '関連の映画'}</span>
+			<div className="flex items-center justify-center py-3 bg-white border-b dark:bg-slate-800 border-b-borderColor dark:border-borderColorDark">
+				<span>{en ? "Similar Movies" : "関連の映画"}</span>
 			</div>
 			<div className="flex-1 overflow-y-scroll custom-scroll">
 				{similarMovies.length > 0 &&

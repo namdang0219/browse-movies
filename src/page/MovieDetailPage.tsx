@@ -20,6 +20,14 @@ import SimilarSection, {
 } from "module/movieDetailPage/SimilarSection";
 import { useEffect } from "react";
 import { useLanguage } from "hook/useLanguage";
+import { useDispatch } from "react-redux";
+import {
+	addToUserFavorite,
+	removeFromUserFavorite,
+} from "store/userMovie/userMovieSlice";
+import { AppDispatch, RootState } from "store/store";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
@@ -28,6 +36,10 @@ const MovieDetailPage = () => {
 		fetcher
 	);
 	const en = useLanguage().isEnglish;
+	const dispatch = useDispatch<AppDispatch>();
+	const { favorite, favoriteLoading } = useSelector(
+		(state: RootState) => state.userMovie
+	);
 
 	const title = movieDetail?.title || "Loading...";
 
@@ -37,6 +49,18 @@ const MovieDetailPage = () => {
 
 	const genres: string[] =
 		movieDetail?.genres.map((g: IGenre) => g.name) || [];
+
+	const handleFavoriteMovie = async () => {
+		if (!favorite.includes(String(movieId))) {
+			await dispatch(addToUserFavorite(String(movieId)));
+			toast.success(en ? "Movie is saved 🎉" : "映画保存済み！🎉");
+		} else if (favorite.includes(String(movieId))) {
+			await dispatch(removeFromUserFavorite(String(movieId)));
+			toast.success(en ? "Movie is removed 🎉" : "映画削除済み！🎉");
+		}
+	};
+
+	console.log(favorite);
 
 	if (isLoading) return <MovieDetailSkeleton />;
 
@@ -94,6 +118,26 @@ const MovieDetailPage = () => {
 										{en ? "Genres:" : "ジャンル："}
 										{genres.join(", ")}
 									</p>
+
+									<button
+										onClick={handleFavoriteMovie}
+										className="flex items-center justify-center w-20 mt-2 text-white transition-all bg-pink-500 rounded-md h-9 hover:bg-pink-600"
+									>
+										{favoriteLoading ? (
+											<div className="loader" />
+										) : favorite &&
+										  favorite.includes(String(movieId)) ? (
+											en ? (
+												"Delete"
+											) : (
+												"削除"
+											)
+										) : en ? (
+											"Save"
+										) : (
+											"保存"
+										)}
+									</button>
 								</div>
 							</div>
 						</div>
