@@ -88,7 +88,7 @@ const LoginModal = () => {
 				<Button loading={loading} type="submit">
 					{en ? "Login" : "ログイン"}
 				</Button>
-				<p className="mt-4 select-none text-slate-400">
+				<p className="flex justify-center gap-1 mt-4 select-none text-slate-400">
 					{en
 						? "Don't have an account?"
 						: "アカウントをお持ちでない方は？"}

@@ -16,7 +16,7 @@ const SavedMovieSection = () => {
 	if (!user?.uid) return <></>;
 
 	return (
-		<div className="px-5 py-5 border-t border-t-slate-700">
+		<div className="px-5 py-5 border-t dark:border-t-slate-700 border-t-slate-200">
 			<h3 className="flex items-center gap-1 mb-2 ml-1 text-base font-semibold text-gray-700 dark:text-slate-400">
 				<span className="inline-block">
 					<svg
@@ -113,7 +113,7 @@ const SidebarSavedMovieItem = ({ movieId }: { movieId: string }) => {
 	return (
 		<li
 			onClick={() => navigate(`/detail/${movieId}`)}
-			className="flex items-center gap-1 px-2 py-2 text-sm rounded-md cursor-pointer select-none line-clamp-1 dark:hover:bg-slate-800 dark:text-slate-300"
+			className="flex items-center gap-1 px-2 py-2 text-sm rounded-md cursor-pointer select-none line-clamp-1 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-300"
 		>
 			<span>
 				<svg

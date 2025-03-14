@@ -118,7 +118,7 @@ const SignupModal = () => {
 				<Button loading={loading} type="submit">
 					{en ? "Sign Up" : "登録"}
 				</Button>
-				<p className="mt-4 select-none text-slate-400">
+				<p className="flex justify-center gap-1 mt-4 select-none text-slate-400">
 					{en
 						? "Already have an account?"
 						: "既にアカウントお持ちの方？"}

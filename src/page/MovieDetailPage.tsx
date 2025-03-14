@@ -91,7 +91,7 @@ const MovieDetailPage = () => {
 
 							{/* detail  */}
 							<div className="flex flex-col gap-1">
-								<h1 className="text-3xl">
+								<h1 className="mb-2 text-3xl">
 									{movieDetail?.title}
 								</h1>
 								<div className="flex flex-col gap-1 text-slate-400">
