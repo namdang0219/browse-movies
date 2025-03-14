@@ -52,7 +52,7 @@ const Logout = () => {
 		try {
 			await auth.signOut();
 			dispatch(setUser(null));
-			toast.success("Logged out successfully");
+			toast.success(en ? "Logged out successfully" : 'ログアウト済み');
 		} catch (error) {
 			toast.error("Something went wrong, please try again");
 		}
