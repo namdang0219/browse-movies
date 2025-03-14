@@ -21,7 +21,7 @@ const HomePage = () => {
 		<MainLayout>
 			<Modal />
 			<BannerSection />
-			<div className="flex flex-col gap-10 mt-6">
+			<div className="flex flex-col gap-10 pb-5 mt-6">
 				<HomeSliderSection
 					movieList={popularMovies}
 					title={en ? "Popular": '人気'}

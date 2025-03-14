@@ -30,6 +30,7 @@ import { useMovieDetail } from "hook/useMovieDetail";
 
 const MovieDetailPage = () => {
 	const { movieId } = useParams();
+	const { user } = useSelector((state: RootState) => state.user);
 
 	const { isLoading, movieDetail } = useMovieDetail(movieId as string);
 
@@ -116,25 +117,29 @@ const MovieDetailPage = () => {
 										{genres.join(", ")}
 									</p>
 
-									<button
-										onClick={handleFavoriteMovie}
-										className="flex items-center justify-center w-40 mt-2 text-sm text-white transition-all bg-pink-500 rounded-md h-9 hover:bg-pink-600"
-									>
-										{favoriteLoading ? (
-											<div className="loader" />
-										) : favorite &&
-										  favorite.includes(String(movieId)) ? (
-											en ? (
-												"Delete from Favorite"
+									{user?.uid && (
+										<button
+											onClick={handleFavoriteMovie}
+											className="flex items-center justify-center w-40 mt-2 text-sm text-white transition-all bg-pink-500 rounded-md h-9 hover:bg-pink-600"
+										>
+											{favoriteLoading ? (
+												<div className="loader" />
+											) : favorite &&
+											  favorite.includes(
+													String(movieId)
+											  ) ? (
+												en ? (
+													"Delete from Favorite"
+												) : (
+													"お気に入りから削除"
+												)
+											) : en ? (
+												"Save to Favorite"
 											) : (
-												"お気に入りから削除"
-											)
-										) : en ? (
-											"Save to Favorite"
-										) : (
-											"お気に入りに追加"
-										)}
-									</button>
+												"お気に入りに追加"
+											)}
+										</button>
+									)}
 								</div>
 							</div>
 						</div>

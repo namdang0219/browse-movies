@@ -6,12 +6,22 @@ import { useLanguage } from "hook/useLanguage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
+import { useRef } from "react";
+import { useOnClickOutside } from "usehooks-ts";
 
 const HeaderBar = () => {
 	const { setModalShow, setModalContent } = useModal();
 	const { user } = useSelector((state: RootState) => state.user);
 	const en = useLanguage().isEnglish;
 	const navigate = useNavigate();
+
+	const searchModelRef = useRef(null);
+
+	const handleClickOutside = () => {
+		setSearchResult([]);
+	};
+
+	useOnClickOutside(searchModelRef, handleClickOutside);
 
 	const handleLoginModal = () => {
 		setModalContent(<SignupModal />);
@@ -62,7 +72,10 @@ const HeaderBar = () => {
 					</button>
 
 					{searchResult.length > 0 && (
-						<div className="absolute z-20 w-full p-2 border dark:text-slate-300 min-h-20 rounded-xl top-12 dark:bg-slate-900 border-borderColor dark:border-borderColorDark">
+						<div
+							ref={searchModelRef}
+							className="absolute z-20 w-full p-2 border dark:text-slate-300 min-h-20 rounded-xl top-12 dark:bg-slate-900 border-borderColor dark:border-borderColorDark"
+						>
 							{searchResult &&
 								searchResult.slice(0, 5).map((item, idx) => (
 									<div
@@ -96,7 +109,10 @@ const HeaderBar = () => {
 								))}
 
 							{searchResult.length > 5 && (
-								<div onClick={handleSearchButton} className="flex items-center justify-center py-2 text-sm rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800">
+								<div
+									onClick={handleSearchButton}
+									className="flex items-center justify-center py-2 text-sm rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800"
+								>
 									すべて
 								</div>
 							)}

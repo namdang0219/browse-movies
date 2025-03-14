@@ -63,11 +63,11 @@ const Logout = () => {
 			{/* log out  */}
 			{user ? (
 				<button
-					className="flex items-center gap-4 pl-4 pr-8 py-2.5 dark:hover:bg-slate-700 rounded-md transition-all"
+					className="flex items-center gap-2 pl-4 pr-8 py-2.5 dark:hover:bg-slate-700 rounded-md transition-all"
 					onClick={handleLogout}
 				>
 					<LogoutIcon></LogoutIcon>
-					<span>{language === "en" ? "Log Out" : "ログアウト"}</span>
+					<span className="text-sm">{language === "en" ? "Log Out" : "ログアウト"}</span>
 				</button>
 			) : (
 				<div className="py-2.5 text-slate-500">

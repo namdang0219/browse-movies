@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { auth } from "firebase-config";
+import { auth, db } from "firebase-config";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	updateProfile,
 	User,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 interface IInitialState {
@@ -36,11 +37,17 @@ export const createUser = createAsyncThunk(
 				});
 			}
 			const user: User = userCredential.user;
-			return {
+
+			const userData = {
 				uid: user.uid,
 				displayName: user.displayName,
 				email: user.email,
+				favorite: [],
 			};
+
+			await setDoc(doc(db, "userData", userData.uid), userData);
+
+			return userData;
 		} catch (error: any) {
 			return rejectWithValue(error.message);
 		}
@@ -60,11 +67,12 @@ export const loginUser = createAsyncThunk(
 				password
 			);
 			const user: User = userCredential.user;
-			toast.success('User logged in successfully')
+			toast.success("User logged in successfully");
 			return {
 				uid: user.uid,
 				displayName: user.displayName,
 				email: user.email,
+				favorite: [],
 			};
 		} catch (error: any) {
 			toast.error(error.message);

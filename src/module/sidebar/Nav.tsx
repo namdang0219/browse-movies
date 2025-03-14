@@ -13,24 +13,43 @@ import { RootState } from "store/store";
 
 const Nav = () => {
 	const { language } = useSelector((state: RootState) => state.global);
+	const { user } = useSelector((state: RootState) => state.user);
 
 	return (
 		<div className="flex flex-col gap-2 p-4">
 			{navigations.map((n, idx) => (
 				<div key={idx}>
-					<NavLink
-						to={n.to}
-						className={({ isActive }) =>
-							`flex items-center gap-4 px-3 py-2.5 rounded-md transition-all select-none ${
-								isActive
-									? "bg-primary text-white pointer-events-none"
-									: " dark:hover:bg-slate-700 hover:bg-slate-100"
-							}`
-						}
-					>
-						{n.icon}
-						<span>{n.label[language]}</span>
-					</NavLink>
+					{n.to !== "/saved" ? (
+						<NavLink
+							to={n.to}
+							className={({ isActive }) =>
+								`flex items-center gap-4 px-3 py-2.5 rounded-md transition-all select-none ${
+									isActive
+										? "bg-primary text-white pointer-events-none"
+										: " dark:hover:bg-slate-700 hover:bg-slate-100"
+								}`
+							}
+						>
+							{n.icon}
+							<span>{n.label[language]}</span>
+						</NavLink>
+					) : user?.uid ? (
+						<NavLink
+							to={n.to}
+							className={({ isActive }) =>
+								`flex items-center gap-4 px-3 py-2.5 rounded-md transition-all select-none ${
+									isActive
+										? "bg-primary text-white pointer-events-none"
+										: " dark:hover:bg-slate-700 hover:bg-slate-100"
+								}`
+							}
+						>
+							{n.icon}
+							<span>{n.label[language]}</span>
+						</NavLink>
+					) : (
+						<></>
+					)}
 				</div>
 			))}
 		</div>

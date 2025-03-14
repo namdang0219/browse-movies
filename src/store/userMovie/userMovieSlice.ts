@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { db } from "firebase-config";
+import { auth, db } from "firebase-config";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 interface IUserMovie {
@@ -15,7 +15,7 @@ const initialState: IUserMovie = {
 export const addToUserFavorite = createAsyncThunk(
 	"userMovie/addToUserFavorite",
 	async (movieId: string, { rejectWithValue }) => {
-		const docRef = doc(db, "userData", "492ku7m1TrkyqdBDLlWR");
+		const docRef = doc(db, "userData", String(auth.currentUser?.uid));
 		await updateDoc(docRef, { favorite: arrayUnion(movieId) });
 	}
 );
@@ -23,7 +23,7 @@ export const addToUserFavorite = createAsyncThunk(
 export const removeFromUserFavorite = createAsyncThunk(
 	"userMovie/removeFromUserFavorite",
 	async (movieId: string, { rejectWithValue }) => {
-		const docRef = doc(db, "userData", "492ku7m1TrkyqdBDLlWR");
+		const docRef = doc(db, "userData", String(auth.currentUser?.uid));
 		await updateDoc(docRef, { favorite: arrayRemove(movieId) });
 	}
 );
