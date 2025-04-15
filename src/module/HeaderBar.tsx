@@ -74,7 +74,7 @@ const HeaderBar = () => {
 					{searchResult.length > 0 && (
 						<div
 							ref={searchModelRef}
-							className="absolute z-20 w-full p-2 border dark:text-slate-300 min-h-20 rounded-xl top-12 dark:bg-slate-900 border-borderColor dark:border-borderColorDark"
+							className="absolute z-20 w-full p-2 border dark:text-slate-300 min-h-20 rounded-xl bg-slate-50 top-12 dark:bg-slate-900 border-borderColor dark:border-borderColorDark"
 						>
 							{searchResult &&
 								searchResult.slice(0, 5).map((item, idx) => (
